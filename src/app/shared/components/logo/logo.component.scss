@@ -1,0 +1,10 @@
+.logo {
+  cursor: pointer;
+
+  &__title {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

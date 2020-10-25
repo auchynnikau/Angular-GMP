@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Input, Output, EventEmitter, Component, OnInit } from '@angular/core';
+import { CourseProps } from '../../../../shared/models/course';
 
 @Component({
   selector: 'vc-course-item',
@@ -6,8 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-item.component.scss']
 })
 export class CourseItemComponent implements OnInit {
-
   constructor() { }
+
+  @Input() course: CourseProps;
+  @Output() onDeleteCourse = new EventEmitter<string>();
+  @Output() onEditCourse = new EventEmitter<string>();
+
+  handleDeleteCourse(id: string): void {
+    this.onDeleteCourse.emit(id);
+  }
+
+  handleEditCourse(id: string): void {
+    this.onEditCourse.emit(id);
+  }
 
   ngOnInit(): void {
   }

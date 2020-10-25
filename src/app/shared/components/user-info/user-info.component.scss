@@ -1,0 +1,13 @@
+.user-info {
+  display: flex;
+
+  & > :not(:first-child) {
+    margin-left: 2.4rem;
+  }
+
+  .user__login, .logout__label {
+    color: #ffffff;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+}

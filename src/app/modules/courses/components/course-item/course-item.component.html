@@ -1,14 +1,16 @@
 <div class="course-item">
   <div class="course-item-header">
-    <h2 class="course-item-header__title"></h2>
-    <span class="course-item-header__duration"></span>
-    <span class="course-item-header__date"></span>
+    <h2 class="course-item-header__title">{{course.title}}</h2>
+    <div class="course-item-info">
+      <span class="course-item-info__duration">{{course.duration}}</span>
+      <span class="course-item-info__date">{{course.creationDate}}</span>
+    </div>
   </div>
   <div class="course-item-content">
-    <p class="course-item-content__description"></p>
+    <p class="course-item-content__description">{{course.description}}</p>
     <div class="course-item-controls">
-      <button class="course-item-controls__edit">Edit</button>
-      <button class="course-item-controls__delete">Delete</button>
+      <button class="course-item-controls__edit" (click)="handleEditCourse(course.id)">Edit</button>
+      <button class="course-item-controls__delete" (click)="handleDeleteCourse(course.id)">Delete</button>
     </div>
   </div>
 </div>
