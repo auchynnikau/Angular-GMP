@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Component, OnInit } from '@angular/core';
+import { Input, Output, EventEmitter, Component } from '@angular/core';
 import { CourseProps } from '../../../../shared/models/course';
 
 @Component({
@@ -6,9 +6,7 @@ import { CourseProps } from '../../../../shared/models/course';
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.scss']
 })
-export class CourseItemComponent implements OnInit {
-  constructor() { }
-
+export class CourseItemComponent {
   @Input() course: CourseProps;
   @Output() onDeleteCourse = new EventEmitter<string>();
   @Output() onEditCourse = new EventEmitter<string>();
@@ -20,8 +18,4 @@ export class CourseItemComponent implements OnInit {
   handleEditCourse(id: string): void {
     this.onEditCourse.emit(id);
   }
-
-  ngOnInit(): void {
-  }
-
 }

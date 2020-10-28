@@ -1,21 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'vc-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit {
-
-  constructor() { }
-
+export class SearchBarComponent {
   searchValue: string;
 
   handleSearch(): void {
-    console.log(this.searchValue)
+    console.log(this.searchValue);
   }
-
-  ngOnInit(): void {
-  }
-
 }

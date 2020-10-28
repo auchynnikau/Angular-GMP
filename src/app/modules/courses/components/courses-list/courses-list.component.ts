@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { coursesMocks } from '../../../../shared/mocks/courses';
 import { CourseProps } from '../../../../shared/models/course';
 
@@ -7,10 +7,7 @@ import { CourseProps } from '../../../../shared/models/course';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss']
 })
-export class CoursesListComponent implements OnInit {
-
-  constructor() { }
-
+export class CoursesListComponent {
   courses: CourseProps[] = [];
 
   ngOnInit(): void {
@@ -18,7 +15,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   loadMore(): void {
-    console.log('load more')
+    console.log('load more');
   }
 
   onDeleteCourse(id: string): void {
