@@ -14,9 +14,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     UserInfoComponent,
     BreadcrumbsComponent,
   ],
-  imports: [
-    BrowserModule,
-  ],
+  imports: [BrowserModule],
   exports: [
     LogoComponent,
     FooterComponent,
@@ -25,4 +23,4 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     BreadcrumbsComponent,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

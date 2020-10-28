@@ -6,6 +6,8 @@ export interface UserProps {
 
 export class User implements UserProps {
   id: string;
+
   firstName: string;
+
   lastName: string;
 }

@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { coursesMocks } from '../../../../shared/mocks/courses';
 import { CourseProps } from '../../../../shared/models/course';
 
 @Component({
   selector: 'vc-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss']
+  styleUrls: ['./courses-list.component.scss'],
 })
-export class CoursesListComponent {
+export class CoursesListComponent implements OnInit {
   courses: CourseProps[] = [];
 
   ngOnInit(): void {
@@ -18,11 +18,11 @@ export class CoursesListComponent {
     console.log('load more');
   }
 
-  onDeleteCourse(id: string): void {
+  deleteCourse(id: string): void {
     console.log('delete: ', id);
   }
 
-  onEditCourse(id: string): void {
+  editCourse(id: string): void {
     console.log('edit: ', id);
   }
 }

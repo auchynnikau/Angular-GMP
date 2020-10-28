@@ -19,6 +19,6 @@ import { SharedModule } from '../../shared/shared.module';
     SearchBarComponent,
     AddCourseComponent,
   ],
-  exports: [CoursesComponent]
+  exports: [CoursesComponent],
 })
-export class CoursesModule { }
+export class CoursesModule {}

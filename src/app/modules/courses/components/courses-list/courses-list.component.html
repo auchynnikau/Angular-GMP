@@ -2,8 +2,8 @@
   <div *ngFor="let course of courses">
     <vc-course-item
       [course]="course"
-      (onEditCourse)="onEditCourse($event)"
-      (onDeleteCourse)="onDeleteCourse($event)"
+      (editCourse)="editCourse($event)"
+      (deleteCourse)="deleteCourse($event)"
       >
     </vc-course-item>
   </div>
