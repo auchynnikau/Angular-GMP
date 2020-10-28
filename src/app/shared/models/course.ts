@@ -8,8 +8,12 @@ export interface CourseProps {
 
 export class Course implements CourseProps {
   id: string;
+
   title: string;
+
   creationDate: Date;
+
   duration: string;
+
   description: string;
 }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
@@ -9,7 +10,7 @@ import { AddCourseComponent } from './components/add-course/add-course.component
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  imports: [BrowserModule, SharedModule],
+  imports: [BrowserModule, SharedModule, FormsModule],
   declarations: [
     CoursesComponent,
     CoursesListComponent,
@@ -18,6 +19,6 @@ import { SharedModule } from '../../shared/shared.module';
     SearchBarComponent,
     AddCourseComponent,
   ],
-  exports: [CoursesComponent]
+  exports: [CoursesComponent],
 })
-export class CoursesModule { }
+export class CoursesModule {}

@@ -1,0 +1,61 @@
+.course-item {
+  height: 14rem;
+  padding: 2.3rem 2.5rem;
+  border-radius: 0.6rem;
+  background: #ffffff;
+  box-shadow: 0 0.1rem 0.2rem 0 rgba(29,30,38,0.10), 0 0.2rem 1rem 0 rgba(29,30,38,0.15);
+
+  .course-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__title {
+      font-size: 2.4rem;
+      font-weight: bolder;
+      color: #333333;
+    }
+  }
+
+  .course-item-info {
+    & > :not(:first-child) {
+      margin-left: 2.4rem;
+    }
+
+    &__duration, &__date {
+      font-size: 1.4rem;
+      color: #858997;
+    }
+  }
+
+  .course-item-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+
+    &__description {
+      color: #474A59;
+      font-size: 1.4rem;
+    }
+  }
+
+  .course-item-controls {
+    display: flex;
+    align-items: center;
+
+    & > :not(:first-child) {
+      margin-left: 1.2rem;
+    }
+
+    &__edit, &__delete {
+      width: 7.2rem;
+      height: 2.4rem;
+      border-radius: 0.3rem;
+      background: #009ECC;
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
