@@ -4,6 +4,7 @@ export interface CourseProps {
   creationDate: Date;
   duration: string;
   description: string;
+  isTopRated: boolean;
 }
 
 export class Course implements CourseProps {
@@ -16,4 +17,6 @@ export class Course implements CourseProps {
   duration: string;
 
   description: string;
+
+  isTopRated: boolean;
 }
