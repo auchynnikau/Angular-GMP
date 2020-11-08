@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { coursesMocks } from '../../../../shared/mocks/courses';
 import { CourseProps } from '../../../../shared/models/course';
 
@@ -9,6 +9,8 @@ import { CourseProps } from '../../../../shared/models/course';
 })
 export class CoursesListComponent implements OnInit {
   courses: CourseProps[] = [];
+
+  @Input() searchQuery: string;
 
   ngOnInit(): void {
     this.courses = coursesMocks;

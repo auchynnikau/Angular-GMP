@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './courses.component.html',
   styleUrls: [],
 })
-export class CoursesComponent {}
+export class CoursesComponent {
+  searchQuery: string;
+
+  handleSearch(searchBarValue: string): void {
+    this.searchQuery = searchBarValue;
+  }
+}

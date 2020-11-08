@@ -9,7 +9,7 @@
       <div class="course-item-header__top-rate" *ngIf="course.isTopRated"></div>
     </div>
     <div class="course-item-info">
-      <span class="course-item-info__duration">{{course.duration | duration: 'hh h mm min'}}</span>
+      <span class="course-item-info__duration">{{course.duration | duration: 'h[h] m[min]'}}</span>
       <span class="course-item-info__date">{{course.creationDate| date: 'M MMM y'}}</span>
     </div>
   </div>

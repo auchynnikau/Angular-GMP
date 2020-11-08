@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
+import 'moment-duration-format';
+
+const durationFormat = 'h[h] m[min]';
 
 @Pipe({ name: 'duration' })
 export class DurationPipe implements PipeTransform {
-  moment: any = moment;
-
-  transform(duration: number, format: string = 'hh h mm min'): string {
-    return moment(duration).format(format);
+  transform(duration: number, format: string = durationFormat): string {
+    return moment.duration(duration, 'minutes').format(format);
   }
 }

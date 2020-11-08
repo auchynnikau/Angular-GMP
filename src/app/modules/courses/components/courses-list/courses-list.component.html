@@ -1,10 +1,10 @@
 <section class="courses-list">
-  <div class="courses-list__item" *ngFor="let course of courses">
+  <div class="courses-list__item" *ngFor="let course of courses | orderBy: 'creationDate' | filter: searchQuery">
     <vc-course-item
       [course]="course"
       (editCourse)="editCourse($event)"
       (deleteCourse)="deleteCourse($event)"
-      >
+    >
     </vc-course-item>
   </div>
   <button class="courses-list__load-more" (click)="loadMore()">
