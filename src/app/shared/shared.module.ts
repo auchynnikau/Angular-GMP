@@ -5,9 +5,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @NgModule({
   declarations: [
+    DurationPipe,
     LogoComponent,
     FooterComponent,
     HeaderComponent,
@@ -22,5 +24,6 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     UserInfoComponent,
     BreadcrumbsComponent,
   ],
+  providers: [DurationPipe],
 })
 export class SharedModule {}

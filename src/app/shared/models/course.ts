@@ -2,7 +2,7 @@ export interface CourseProps {
   id: string;
   title: string;
   creationDate: Date;
-  duration: string;
+  duration: number;
   description: string;
   isTopRated: boolean;
 }
@@ -14,7 +14,7 @@ export class Course implements CourseProps {
 
   creationDate: Date;
 
-  duration: string;
+  duration: number;
 
   description: string;
 

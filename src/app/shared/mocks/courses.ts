@@ -4,7 +4,7 @@ export const coursesMocks: CourseProps[] = [
   {
     id: '123123',
     title: 'Course Title',
-    duration: '1h 30min',
+    duration: 90,
     creationDate: new Date(),
     isTopRated: true,
     description:
@@ -13,7 +13,7 @@ export const coursesMocks: CourseProps[] = [
   {
     id: '12234234',
     title: 'Course Title',
-    duration: '1h 30min',
+    duration: 90,
     creationDate: new Date('December 17, 1995 03:24:00'),
     isTopRated: false,
     description:
@@ -22,7 +22,7 @@ export const coursesMocks: CourseProps[] = [
   {
     id: '123123423',
     title: 'Course Title',
-    duration: '1h 30min',
+    duration: 50,
     creationDate: new Date('December 17, 2025 03:24:00'),
     isTopRated: false,
     description:
