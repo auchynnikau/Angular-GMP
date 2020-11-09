@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class CoursesComponent {
   searchQuery: string;
 
-  handleSearch(searchBarValue: string): void {
-    this.searchQuery = searchBarValue;
+  handleSearch(searchValue: string): void {
+    this.searchQuery = searchValue;
   }
 }

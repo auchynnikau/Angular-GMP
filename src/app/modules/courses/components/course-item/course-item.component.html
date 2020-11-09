@@ -1,6 +1,7 @@
 <div
+  courseHighlight
+  [highlight]="course.creationDate"
   class="course-item"
-  [courseHighlight]="courseHighlight"
   [ngClass]="{'course-item--top-rated' : course.isTopRated === true}"
 >
   <div class="course-item-header">
@@ -10,7 +11,7 @@
     </div>
     <div class="course-item-info">
       <span class="course-item-info__duration">{{course.duration | duration: 'h[h] m[min]'}}</span>
-      <span class="course-item-info__date">{{course.creationDate| date: 'M MMM y'}}</span>
+      <span class="course-item-info__date">{{course.creationDate | date: 'M MMM y'}}</span>
     </div>
   </div>
   <div class="course-item-content">

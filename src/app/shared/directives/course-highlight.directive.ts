@@ -1,18 +1,38 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, Renderer2, ElementRef, Input, OnInit } from '@angular/core';
+
+const DAYS_AGO = 14;
 
 @Directive({
   selector: '[courseHighlight]',
 })
 export class CourseHighlightDirective implements OnInit {
-  constructor(private element: ElementRef) {
-    element.nativeElement.style.border = 'none';
+  constructor(private renderer: Renderer2, private element: ElementRef) {
+    this.renderer.setStyle(element.nativeElement, 'border', 'none');
   }
 
-  @Input('courseHighlight') highlightColor: string;
+  @Input() highlight: Date;
 
   ngOnInit() {
-    if (this.highlightColor) {
-      this.element.nativeElement.style.border = `0.1rem solid ${this.highlightColor}`;
+    const highlightColor = this.getCourseHighlight(this.highlight);
+
+    if (highlightColor) {
+      const borderStyle = `0.1rem solid ${highlightColor}`;
+      this.renderer.setStyle(this.element.nativeElement, 'border', borderStyle);
     }
+  }
+
+  getCourseHighlight(creationDate: Date): string {
+    const currentDate = new Date();
+    const pastDateTermValue = new Date().setDate(creationDate.getDate() - DAYS_AGO);
+    const pastDateTerm = new Date(pastDateTermValue);
+
+    if (creationDate < currentDate && creationDate >= pastDateTerm) {
+      return 'green';
+    }
+    if (creationDate > currentDate) {
+      return 'blue';
+    }
+
+    return '';
   }
 }

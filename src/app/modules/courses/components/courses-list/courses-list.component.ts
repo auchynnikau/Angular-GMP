@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 import { coursesMocks } from '../../../../shared/mocks/courses';
 import { CourseProps } from '../../../../shared/models/course';
 import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
@@ -9,14 +9,14 @@ import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
   styleUrls: ['./courses-list.component.scss'],
   providers: [FilterPipe],
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnChanges {
   constructor(private filter: FilterPipe) {}
 
   courses: CourseProps[] = [];
 
   @Input() searchQuery: string;
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.courses = this.filter.transform(coursesMocks, this.searchQuery);
   }
 

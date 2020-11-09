@@ -22,5 +22,6 @@ import { CourseHighlightDirective } from '../../shared/directives/course-highlig
     CourseHighlightDirective,
   ],
   exports: [CoursesComponent],
+  providers: [CourseHighlightDirective],
 })
 export class CoursesModule {}
