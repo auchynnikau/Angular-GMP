@@ -8,6 +8,7 @@ import { CoursesControlsComponent } from './components/courses-controls/courses-
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { AddCourseComponent } from './components/add-course/add-course.component';
 import { SharedModule } from '../../shared/shared.module';
+import { CourseHighlightDirective } from '../../shared/directives/course-highlight.directive';
 
 @NgModule({
   imports: [BrowserModule, SharedModule, FormsModule],
@@ -18,7 +19,9 @@ import { SharedModule } from '../../shared/shared.module';
     CoursesControlsComponent,
     SearchBarComponent,
     AddCourseComponent,
+    CourseHighlightDirective,
   ],
   exports: [CoursesComponent],
+  providers: [CourseHighlightDirective],
 })
 export class CoursesModule {}

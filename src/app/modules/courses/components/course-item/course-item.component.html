@@ -1,9 +1,17 @@
-<div class="course-item">
+<div
+  courseHighlight
+  [highlight]="course.creationDate"
+  class="course-item"
+  [ngClass]="{'course-item--top-rated' : course.isTopRated === true}"
+>
   <div class="course-item-header">
-    <h2 class="course-item-header__title">{{course.title}}</h2>
+    <div class="course-item-header__title-wrapper">
+      <h2 class="course-item-header__title">{{course.title | uppercase}}</h2>
+      <div class="course-item-header__top-rate" *ngIf="course.isTopRated"></div>
+    </div>
     <div class="course-item-info">
-      <span class="course-item-info__duration">{{course.duration}}</span>
-      <span class="course-item-info__date">{{course.creationDate}}</span>
+      <span class="course-item-info__duration">{{course.duration | duration: 'h[h] m[min]'}}</span>
+      <span class="course-item-info__date">{{course.creationDate | date: 'M MMM y'}}</span>
     </div>
   </div>
   <div class="course-item-content">

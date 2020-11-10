@@ -5,15 +5,32 @@
   background: #ffffff;
   box-shadow: 0 0.1rem 0.2rem 0 rgba(29,30,38,0.10), 0 0.2rem 1rem 0 rgba(29,30,38,0.15);
 
+  &--top-rated {
+    background: #e5f4ff;
+  }
+
   .course-item-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    &__title-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
     &__title {
       font-size: 2.4rem;
       font-weight: bolder;
       color: #333333;
+    }
+
+    &__top-rate {
+      height: 2rem;
+      width: 2rem;
+      margin-left: 1rem;
+      background: url('https://www.flaticon.com/svg/static/icons/svg/616/616489.svg') no-repeat center;
+      background-size: contain;
     }
   }
 

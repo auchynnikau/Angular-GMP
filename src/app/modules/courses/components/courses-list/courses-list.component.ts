@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 import { coursesMocks } from '../../../../shared/mocks/courses';
 import { CourseProps } from '../../../../shared/models/course';
+import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
 
 @Component({
   selector: 'vc-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
+  providers: [FilterPipe],
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnChanges {
+  constructor(private filter: FilterPipe) {}
+
   courses: CourseProps[] = [];
 
-  ngOnInit(): void {
-    this.courses = coursesMocks;
+  @Input() searchQuery: string;
+
+  ngOnChanges(): void {
+    this.courses = this.filter.transform(coursesMocks, this.searchQuery);
   }
 
   loadMore(): void {

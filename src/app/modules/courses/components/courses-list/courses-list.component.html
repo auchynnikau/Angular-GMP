@@ -1,11 +1,15 @@
 <section class="courses-list">
-  <div class="courses-list__item" *ngFor="let course of courses">
+  <div class="courses-list__item" *ngFor="let course of courses | orderBy: 'creationDate'">
     <vc-course-item
       [course]="course"
       (editCourse)="editCourse($event)"
       (deleteCourse)="deleteCourse($event)"
-      >
+    >
     </vc-course-item>
   </div>
-  <button class="courses-list__load-more" (click)="loadMore()">Load more</button>
+  <button class="courses-list__load-more" (click)="loadMore()">
+    <ng-container *ngIf="courses.length; then loadMoreLabel else noDataLabel"></ng-container>
+    <ng-template #loadMoreLabel>Load more</ng-template>
+    <ng-template #noDataLabel>No data. Feel free to add new course</ng-template>
+  </button>
 </section>
