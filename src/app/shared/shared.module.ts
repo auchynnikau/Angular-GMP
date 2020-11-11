@@ -8,6 +8,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const components = [
   BreadcrumbsComponent,
@@ -22,6 +24,6 @@ const pipes = [DurationPipe, OrderByPipe, FilterPipe];
 @NgModule({
   declarations: [...pipes, ...components],
   exports: [...pipes, ...components],
-  imports: [BrowserModule],
+  imports: [BrowserModule, MatButtonModule, MatFormFieldModule],
 })
 export class SharedModule {}

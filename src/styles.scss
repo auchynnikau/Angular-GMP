@@ -88,3 +88,6 @@ select {
   font-family: "SourceSansPro";
   src: local("SourceSansPro"), url(./assets/fonts/SourceSansPro-Regular.ttf) format("truetype");
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

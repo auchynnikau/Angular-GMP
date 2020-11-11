@@ -1,4 +1,4 @@
 <header class="header">
   <vc-logo></vc-logo>
-  <vc-user-info></vc-user-info>
+  <vc-user-info *ngIf="isAuthenticated" (logout)="logout()"></vc-user-info>
 </header>
