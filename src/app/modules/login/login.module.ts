@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { LoginComponent } from './pages/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { SharedModule } from '../../shared/shared.module';
+import { MaterialModule } from '../material/material.module';
+
 import { LoginFormComponent } from './components/login-form/login-form.component';
 
 @NgModule({
-  imports: [BrowserModule, SharedModule, FormsModule],
+  imports: [ReactiveFormsModule, MaterialModule, BrowserModule, SharedModule, FormsModule],
   declarations: [LoginFormComponent],
-  exports: [LoginComponent],
-  providers: [],
+  exports: [LoginFormComponent],
 })
 export class LoginModule {}

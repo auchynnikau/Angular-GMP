@@ -7,11 +7,12 @@ import { CourseItemComponent } from './components/course-item/course-item.compon
 import { CoursesControlsComponent } from './components/courses-controls/courses-controls.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { AddCourseComponent } from './components/add-course/add-course.component';
+import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CourseHighlightDirective } from '../../shared/directives/course-highlight.directive';
 
 @NgModule({
-  imports: [BrowserModule, SharedModule, FormsModule],
+  imports: [BrowserModule, SharedModule, FormsModule, MaterialModule],
   declarations: [
     CoursesComponent,
     CoursesListComponent,

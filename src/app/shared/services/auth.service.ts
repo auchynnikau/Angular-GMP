@@ -2,24 +2,27 @@ import { UserProps } from 'src/app/shared/models/user';
 import { userMocks } from 'src/app/shared/mocks/user';
 
 export class AuthService {
-  private isAuthenticated: boolean = this.checkIsAuthenticated();
+  private isAuthenticated = false;
 
   private user: UserProps = { ...userMocks };
 
   private token = '123e143245t';
 
-  login(): void {
-    const { firstName, lastName } = this.user;
-    localStorage.setItem('user', `${firstName} ${lastName}`);
-    localStorage.setItem('token', this.token);
+  login(email: string, password: string): void {
+    if (email === this.user.email && password === this.user.password) {
+      localStorage.setItem('user', this.user.userName);
+      localStorage.setItem('token', this.token);
+      this.isAuthenticated = true;
+    }
   }
 
   logout(): void {
     localStorage.clear();
+    this.isAuthenticated = false;
   }
 
   checkIsAuthenticated(): boolean {
-    return Boolean(localStorage.getItem('user'));
+    return this.isAuthenticated;
   }
 
   getUserInfo(): string {

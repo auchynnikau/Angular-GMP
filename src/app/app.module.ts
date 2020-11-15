@@ -1,26 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './modules/login/login.module';
 import { CoursesModule } from './modules/courses/courses.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './modules/material/material.module';
 
 @NgModule({
   declarations: [AppComponent],
+  bootstrap: [AppComponent],
   imports: [
-    LoginModule,
-    SharedModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    MaterialModule,
     CoursesModule,
     BrowserModule,
-    AppRoutingModule,
-    NoopAnimationsModule,
-    BrowserAnimationsModule,
+    SharedModule,
+    LoginModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

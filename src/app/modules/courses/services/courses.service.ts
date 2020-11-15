@@ -17,8 +17,8 @@ export class CoursesService {
   }
 
   updateCourse(course: CourseProps): void {
-    const courseToUpdate = this.courses.findIndex(({ id }) => id === course.id);
-    this.courses[courseToUpdate] = course;
+    const updatedCourseIndex = this.courses.findIndex(({ id }) => id === course.id);
+    this.courses[updatedCourseIndex] = course;
   }
 
   deleteCourse(id: string): void {

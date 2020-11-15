@@ -1,4 +1,6 @@
 import { Component, OnChanges, Input } from '@angular/core';
+import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 import { CourseProps } from '../../../../shared/models/course';
 import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
 import { CoursesService } from '../../services/courses.service';
@@ -12,12 +14,28 @@ import { CoursesService } from '../../services/courses.service';
 export class CoursesListComponent implements OnChanges {
   constructor(
     private coursesService: CoursesService,
-    private filter: FilterPipe
+    private filter: FilterPipe,
+    private dialog: MatDialog,
   ) {}
 
   courses: CourseProps[] = [];
 
   @Input() searchQuery: string;
+
+  confirmDeleting(id: string): void {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: {
+        title: 'Warning!',
+        description: 'Are you sure to delete this course?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.deleteCourse(id);
+      }
+    });
+  }
 
   ngOnChanges(): void {
     this.getCoursesList();
@@ -28,10 +46,8 @@ export class CoursesListComponent implements OnChanges {
   }
 
   deleteCourse(id: string): void {
-    if (confirm('Are you sure to delete this course?')) {
-      this.coursesService.deleteCourse(id);
-      this.getCoursesList();
-    }
+    this.coursesService.deleteCourse(id);
+    this.getCoursesList();
   }
 
   editCourse(id: string): void {

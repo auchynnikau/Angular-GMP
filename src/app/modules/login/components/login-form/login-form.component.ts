@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -10,11 +11,21 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginFormComponent {
   constructor(private authService: AuthService) {}
 
-  email: string;
+  email: FormControl = new FormControl('', [Validators.required, Validators.email]);
+
   password: string;
 
-  login() {
-    this.authService.login();
-    console.log('Logged successfully...')
+  isPasswordShown = true;
+
+  login({ value: email }: FormControl, password: string) {
+    this.authService.login(email, password);
+  }
+
+  getErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 }

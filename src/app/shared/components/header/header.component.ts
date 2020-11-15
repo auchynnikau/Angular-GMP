@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -7,13 +7,24 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./header.component.scss'],
   providers: [AuthService],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnChanges {
   constructor(private authService: AuthService) {}
 
-  isAuthenticated: boolean = this.authService.checkIsAuthenticated();
+  isAuthenticated = false;
+
+  ngOnInit() {
+    this.checkIsAuthenticated();
+  }
+
+  ngOnChanges() {
+    this.checkIsAuthenticated();
+  }
+
+  checkIsAuthenticated() {
+    this.isAuthenticated = this.authService.checkIsAuthenticated();
+  }
 
   logout() {
     this.authService.logout();
-    console.log('Logout ...');
   }
 }
