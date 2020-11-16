@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -7,20 +7,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./app.component.scss'],
   providers: [AuthService],
 })
-export class AppComponent implements OnInit, OnChanges {
+export class AppComponent {
   constructor(private authService: AuthService) {}
 
-  isAuthenticated = false;
-
-  ngOnInit() {
-    this.checkIsAuthenticated();
-  }
-
-  ngOnChanges() {
-    this.checkIsAuthenticated();
-  }
-
-  checkIsAuthenticated() {
-    this.isAuthenticated = this.authService.checkIsAuthenticated();
+  get isAuthenticated() {
+    return this.authService.isAuthenticated;
   }
 }

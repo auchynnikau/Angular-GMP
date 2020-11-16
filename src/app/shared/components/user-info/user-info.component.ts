@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'vc-user-info',
@@ -6,6 +6,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./user-info.component.scss'],
 })
 export class UserInfoComponent {
+  @Input() userName: string;
+
   @Output() logout = new EventEmitter();
 
   handleLogout(): void {
