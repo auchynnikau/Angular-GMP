@@ -2,6 +2,9 @@ export interface UserProps {
   id: string;
   firstName: string;
   lastName: string;
+  userName: string;
+  password: string;
+  email: string;
 }
 
 export class User implements UserProps {
@@ -10,4 +13,10 @@ export class User implements UserProps {
   firstName: string;
 
   lastName: string;
+
+  userName: string;
+
+  password: string;
+
+  email: string;
 }

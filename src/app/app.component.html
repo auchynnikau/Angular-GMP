@@ -1,1 +1,5 @@
-<vc-courses></vc-courses>
+<vc-header></vc-header>
+<vc-breadcrumbs *ngIf="isAuthenticated"></vc-breadcrumbs>
+<vc-courses *ngIf="isAuthenticated"></vc-courses>
+<vc-login-form *ngIf="!isAuthenticated"></vc-login-form>
+<vc-footer></vc-footer>

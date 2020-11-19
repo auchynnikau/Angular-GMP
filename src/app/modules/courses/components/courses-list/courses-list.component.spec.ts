@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CoursesListComponent } from './courses-list.component';
-import { coursesMocks } from '../../../../shared/mocks/courses';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -25,18 +24,19 @@ describe('CoursesListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have data after Angular calls ngOnInit', () => {
-    component.ngOnInit();
+  it('should have data after Angular calls OnChanges', () => {
+    component.ngOnChanges();
 
     expect(component.courses.length).toBeGreaterThan(0);
   });
 
   it('should call the loadMore method', () => {
-    spyOn(component, 'loadMore');
+    const loadMoreSpy = spyOn(component, 'loadMore');
     element = fixture.debugElement.query(By.css('button')).nativeElement;
     element.click();
+    component.loadMore();
 
-    expect(component.loadMore).toHaveBeenCalledTimes(1);
+    expect(loadMoreSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should log delete message', () => {
@@ -54,7 +54,7 @@ describe('CoursesListComponent', () => {
   });
 
   it('should map data', () => {
-    component.ngOnInit();
+    component.ngOnChanges();
     const courseItems = document.getElementsByClassName('courses-list__item');
 
     expect(courseItems.length).toBe(3);
