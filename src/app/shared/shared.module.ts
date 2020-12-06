@@ -12,9 +12,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const components = [
   BreadcrumbsComponent,
+  NotFoundComponent,
   UserInfoComponent,
   ConfirmComponent,
   FooterComponent,

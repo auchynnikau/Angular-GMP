@@ -11,9 +11,17 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CourseHighlightDirective } from '../../shared/directives/course-highlight.directive';
 import { CourseFormComponent } from './pages/course-form/course-form.component';
+import { CoursesRoutingModule } from './courses-routing.module';
 
 @NgModule({
-  imports: [ReactiveFormsModule, BrowserModule, SharedModule, FormsModule, MaterialModule],
+  imports: [
+    CoursesRoutingModule,
+    ReactiveFormsModule,
+    BrowserModule,
+    SharedModule,
+    FormsModule,
+    MaterialModule,
+  ],
   declarations: [
     CoursesComponent,
     CoursesListComponent,
