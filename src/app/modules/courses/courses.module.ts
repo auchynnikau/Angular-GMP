@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
 import { CourseItemComponent } from './components/course-item/course-item.component';
 import { CoursesControlsComponent } from './components/courses-controls/courses-controls.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { AddCourseComponent } from './components/add-course/add-course.component';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CourseHighlightDirective } from '../../shared/directives/course-highlight.directive';
@@ -17,10 +16,10 @@ import { CoursesRoutingModule } from './courses-routing.module';
   imports: [
     CoursesRoutingModule,
     ReactiveFormsModule,
-    BrowserModule,
     SharedModule,
     FormsModule,
     MaterialModule,
+    CommonModule,
   ],
   declarations: [
     CoursesComponent,
@@ -28,11 +27,9 @@ import { CoursesRoutingModule } from './courses-routing.module';
     CourseItemComponent,
     CoursesControlsComponent,
     SearchBarComponent,
-    AddCourseComponent,
     CourseHighlightDirective,
     CourseFormComponent,
   ],
-  exports: [CoursesComponent, CourseFormComponent],
   providers: [CourseHighlightDirective],
 })
 export class CoursesModule {}

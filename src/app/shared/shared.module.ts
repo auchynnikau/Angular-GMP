@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../modules/material/material.module';
 
 import { FilterPipe } from './pipes/filter.pipe';
@@ -29,6 +29,6 @@ const pipes = [DurationPipe, OrderByPipe, FilterPipe];
 @NgModule({
   declarations: [...pipes, ...components],
   exports: [...pipes, ...components],
-  imports: [BrowserModule, MaterialModule],
+  imports: [CommonModule, MaterialModule],
 })
 export class SharedModule {}
