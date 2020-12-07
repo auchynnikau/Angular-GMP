@@ -17,7 +17,7 @@
   <div class="course-item-content">
     <p class="course-item-content__description">{{course.description}}</p>
     <div class="course-item-controls">
-      <button mat-raised-button color="primary" (click)="handleEditCourse(course.id)">
+      <button mat-raised-button color="primary" (click)="handleEditCourse(course.id)" [routerLink]="['/courses', course.id]">
         <mat-icon fontSet="fa" fontIcon="fa-edit"></mat-icon>
         Edit
       </button>

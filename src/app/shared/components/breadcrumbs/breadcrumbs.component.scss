@@ -8,7 +8,17 @@
   &__item {
     color: #464A5A;
     font-size: 1.4rem;
-    font-weight: bold;
+    text-decoration: none;
     cursor: pointer;
+
+    &--active {
+      font-weight: bold;
+    }
+  }
+
+  &__divider {
+    margin: 0 0.5rem;
+    color: #009ECC;
+    font-size: 1.4rem;
   }
 }
