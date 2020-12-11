@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
@@ -10,9 +10,10 @@ import { AddCourseComponent } from './components/add-course/add-course.component
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CourseHighlightDirective } from '../../shared/directives/course-highlight.directive';
+import { CourseFormComponent } from './pages/course-form/course-form.component';
 
 @NgModule({
-  imports: [BrowserModule, SharedModule, FormsModule, MaterialModule],
+  imports: [ReactiveFormsModule, BrowserModule, SharedModule, FormsModule, MaterialModule],
   declarations: [
     CoursesComponent,
     CoursesListComponent,
@@ -21,8 +22,9 @@ import { CourseHighlightDirective } from '../../shared/directives/course-highlig
     SearchBarComponent,
     AddCourseComponent,
     CourseHighlightDirective,
+    CourseFormComponent,
   ],
-  exports: [CoursesComponent],
+  exports: [CoursesComponent, CourseFormComponent],
   providers: [CourseHighlightDirective],
 })
 export class CoursesModule {}
