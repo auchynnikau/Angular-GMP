@@ -5,7 +5,19 @@
   align-items: center;
   background-color: #ffffff;
 
-  &__item {
+  &__list {
+    display: flex;
+  }
+
+  &__item:not(:last-child) {
+    ::after {
+      content: '/';
+      color: #009ECC;
+      margin-right: 0.3rem;
+    }
+  }
+
+  &__link {
     color: #464A5A;
     font-size: 1.4rem;
     text-decoration: none;
@@ -14,11 +26,5 @@
     &--active {
       font-weight: bold;
     }
-  }
-
-  &__divider {
-    margin: 0 0.5rem;
-    color: #009ECC;
-    font-size: 1.4rem;
   }
 }

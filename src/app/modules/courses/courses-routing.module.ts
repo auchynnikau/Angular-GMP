@@ -4,9 +4,15 @@ import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseFormComponent } from './pages/course-form/course-form.component';
 
 const routes: Routes = [
-  { path: '', component: CoursesComponent },
-  { path: ':id', component: CourseFormComponent },
-  { path: 'new', component: CourseFormComponent },
+  {
+    path: '',
+    data: { breadcrumb: null },
+    children: [
+      { path: '', data: { breadcrumb: null }, component: CoursesComponent },
+      { path: 'new', data: { breadcrumb: 'New Course' }, component: CourseFormComponent },
+      { path: ':id', data: { breadcrumb: 'Course Info' }, component: CourseFormComponent },
+    ],
+  },
 ];
 
 @NgModule({
