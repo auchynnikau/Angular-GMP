@@ -12,12 +12,12 @@
     <mat-label>Duration:</mat-label>
     <input matInput required [(ngModel)]="course.duration" placeholder="Enter course duration">
   </mat-form-field>
-  <!-- <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline">
     <mat-label>Date:</mat-label>
     <input matInput required [(ngModel)]="course.creationDate" [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field> -->
+  </mat-form-field>
   <mat-form-field>
     <mat-chip-list #chipList>
       <mat-chip (removed)="remove()">
