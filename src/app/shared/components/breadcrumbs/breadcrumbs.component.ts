@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { CoursesService } from 'src/app/modules/courses/services/courses.service';
 import { Breadcrumbs } from './breadcrumbs';
+
+const DEFAULT_BREADCRUMB = 'Courses';
 
 @Component({
   selector: 'vc-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
+  providers: [CoursesService],
 })
 export class BreadcrumbsComponent {
   breadcrumbs = this.router.events.pipe(
@@ -15,14 +19,31 @@ export class BreadcrumbsComponent {
     map(() => this.buildBreadCrumb(this.activatedRoute.root)),
   );
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private coursesService: CoursesService,
+    private router: Router,
+  ) {}
+
+  getBreadCrumbLabel(route: ActivatedRoute) {
+    if (route.routeConfig) {
+      if (route.snapshot.params.id) {
+        const course = this.coursesService.getCoursesItem(route.snapshot.params.id);
+        return course.title;
+      }
+
+      return route.routeConfig.data.breadcrumb;
+    }
+
+    return DEFAULT_BREADCRUMB;
+  }
 
   buildBreadCrumb(
     route: ActivatedRoute,
     url: string = '',
     breadcrumbs: Array<Breadcrumbs> = [],
   ): Array<Breadcrumbs> {
-    const label = route.routeConfig ? route.routeConfig.data.breadcrumb : 'Courses';
+    const label = this.getBreadCrumbLabel(route);
     const path = route.routeConfig ? route.routeConfig.path : '';
     const nextUrl = `${url}${path}/`;
     const breadcrumb = { url: nextUrl, label };

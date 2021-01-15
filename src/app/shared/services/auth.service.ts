@@ -1,6 +1,8 @@
+import { Injectable } from '@angular/core';
 import { UserProps } from 'src/app/shared/models/user';
 import { userMocks } from 'src/app/shared/mocks/user';
 
+@Injectable()
 export class AuthService {
   private user: UserProps = { ...userMocks };
 
@@ -10,18 +12,18 @@ export class AuthService {
     return localStorage.getItem('token') === this.token;
   }
 
-  login(email: string, password: string): void {
+  public login(email: string, password: string): void {
     if (email === this.user.email && password === this.user.password) {
       localStorage.setItem('user', this.user.userName);
       localStorage.setItem('token', this.token);
     }
   }
 
-  logout(): void {
+  public logout(): void {
     localStorage.clear();
   }
 
-  getUserInfo(): string {
+  public getUserInfo(): string {
     if (this.isAuthenticated) {
       return localStorage.getItem('user');
     }

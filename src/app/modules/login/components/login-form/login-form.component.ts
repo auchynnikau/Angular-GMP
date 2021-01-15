@@ -28,11 +28,16 @@ export class LoginFormComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.redirect = params.return || '/courses';
     });
+
+    this.checkRedirect();
   }
 
   login({ value: email }: FormControl, password: string) {
     this.authService.login(email, password);
+    this.checkRedirect();
+  }
 
+  checkRedirect() {
     if (this.authService.isAuthenticated) {
       this.router.navigateByUrl(this.redirect);
     }
