@@ -2,27 +2,25 @@
   <h3>New course</h3>
   <mat-form-field appearance="outline">
     <mat-label>Title:</mat-label>
-    <input matInput required placeholder="Enter course title">
+    <input matInput required [(ngModel)]="course.title" placeholder="Enter course title">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Description:</mat-label>
-    <textarea matInput required placeholder="Type course description"></textarea>
+    <textarea matInput required [(ngModel)]="course.description" placeholder="Type course description"></textarea>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Duration:</mat-label>
-    <input matInput required placeholder="Enter course duration">
+    <input matInput required [(ngModel)]="course.duration" placeholder="Enter course duration">
   </mat-form-field>
-  <!-- <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline">
     <mat-label>Date:</mat-label>
-    <input matInput required [matDatepicker]="picker">
+    <input matInput required [(ngModel)]="course.creationDate" [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field> -->
+  </mat-form-field>
   <mat-form-field>
     <mat-chip-list #chipList>
-      <mat-chip
-        (removed)="remove()"
-      >
+      <mat-chip (removed)="remove()">
         {{'test chips'}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
@@ -33,7 +31,7 @@
     </mat-chip-list>
   </mat-form-field>
   <div class="course-form__footer">
-    <button mat-stroked-button color="basic" (click)="cancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
+    <button mat-stroked-button color="basic" (click)="cancel()" routerLink="/">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()" routerLink="/">Save</button>
   </div>
 </section>

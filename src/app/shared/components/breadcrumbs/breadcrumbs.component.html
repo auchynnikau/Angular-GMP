@@ -1,3 +1,20 @@
 <nav class="breadcrumbs">
-  <a class="breadcrumbs__item">Courses</a>
+  <ul class="breadcrumbs__list">
+    <li
+      class="breadcrumbs__item"
+      *ngFor="let breadcrumb of breadcrumbs | async; last as isLast;"
+    >
+      <a
+        class="breadcrumbs__link breadcrumbs__link--active"
+        *ngIf="!isLast; else lastRoute"
+        [routerLink]="[breadcrumb.url]"
+        routerLinkActive="active"
+      >
+        {{ breadcrumb.label }}
+      </a>
+      <ng-template #lastRoute>
+        <a class="breadcrumbs__link">{{ breadcrumb.label }}</a>
+      </ng-template>
+    </li>
+  </ul>
 </nav>
