@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService, UserInfo } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'vc-header',
@@ -7,10 +7,24 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./header.component.scss'],
   providers: [AuthService],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
-  userName: string = this.authService.getUserInfo();
+  userName: string;
+
+  ngOnInit() {
+    this.getUserName();
+  }
+
+  getUserName() {
+    this.authService.getUserInfo().subscribe((data: UserInfo) => {
+      const {
+        name: { first, last },
+      } = data;
+
+      this.userName = `${first} ${last}`;
+    });
+  }
 
   get isAuthenticated() {
     return this.authService.isAuthenticated;

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService, Token } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'vc-login-form',
@@ -16,38 +15,28 @@ export class LoginFormComponent implements OnInit {
     private router: Router,
   ) {}
 
-  email: FormControl = new FormControl('', [Validators.required, Validators.email]);
-
   isPasswordShown = true;
-
   password = '';
-
   redirect = '';
+  login = '';
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params): void => {
       this.redirect = params.return || '/courses';
+      this.checkRedirect();
     });
-
-    this.checkRedirect();
   }
 
-  login({ value: email }: FormControl, password: string) {
-    this.authService.login(email, password);
-    this.checkRedirect();
+  logIn(login: string, password: string): void {
+    this.authService.login(login, password).subscribe((data: Token): void => {
+      localStorage.setItem('token', data.token);
+      this.checkRedirect();
+    });
   }
 
-  checkRedirect() {
+  checkRedirect(): void {
     if (this.authService.isAuthenticated) {
       this.router.navigateByUrl(this.redirect);
     }
-  }
-
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 }

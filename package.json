@@ -36,6 +36,7 @@
     "moment-duration-format": "^2.3.2",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
+    "url-join": "^4.0.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

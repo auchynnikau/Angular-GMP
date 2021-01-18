@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { MaterialModule } from './modules/material/material.module';
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
+    HttpClientModule,
     MaterialModule,
     CoursesModule,
     SharedModule,
