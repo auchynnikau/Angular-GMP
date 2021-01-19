@@ -5,8 +5,8 @@ import { Course } from '../models/course';
 export class FilterPipe implements PipeTransform {
   transform(courses: Course[], searchQuery: string): Course[] {
     if (searchQuery) {
-      return courses.filter(({ title }: Course): boolean => {
-        return title.toLowerCase().includes(searchQuery.toLowerCase());
+      return courses.filter(({ name }: Course): boolean => {
+        return name.toLowerCase().includes(searchQuery.toLowerCase());
       });
     }
 

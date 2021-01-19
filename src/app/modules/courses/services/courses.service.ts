@@ -1,27 +1,38 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { CourseProps } from 'src/app/shared/models/course';
-import { coursesMocks } from 'src/app/shared/mocks/courses';
+import { environment } from 'src/environments/environment';
+import urljoin from 'url-join';
 
+const COURSES_URL = '/courses';
+
+@Injectable()
 export class CoursesService {
-  private courses: CourseProps[] = [...coursesMocks];
+  constructor(private http: HttpClient) {}
 
-  getCoursesList(): CourseProps[] {
-    return this.courses;
+  getCoursesList(count: number = 5): Observable<CourseProps[]> {
+    const url = urljoin(environment.apiUrl, COURSES_URL, `?count=${count}`);
+    return this.http.get<CourseProps[]>(url);
   }
 
-  getCoursesItem(id: string): CourseProps {
-    return this.courses.find(({ id: courseId }) => courseId === id);
+  getCoursesItem(id: string): Observable<CourseProps> {
+    const url = urljoin(environment.apiUrl, COURSES_URL, id);
+    return this.http.get<CourseProps>(url);
   }
 
   createCourse(course: CourseProps): void {
-    this.courses.push(course);
+    const url = urljoin(environment.apiUrl, COURSES_URL);
+    this.http.post<CourseProps>(url, course);
   }
 
   updateCourse(course: CourseProps): void {
-    const updatedCourseIndex = this.courses.findIndex(({ id }) => id === course.id);
-    this.courses[updatedCourseIndex] = course;
+    const url = urljoin(environment.apiUrl, COURSES_URL, course.id.toString());
+    this.http.patch<CourseProps>(url, course);
   }
 
   deleteCourse(id: string): void {
-    this.courses = this.courses.filter(({ id: courseId }) => courseId !== id);
+    const url = urljoin(environment.apiUrl, COURSES_URL, id);
+    this.http.delete<CourseProps>(url);
   }
 }

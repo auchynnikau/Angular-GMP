@@ -22,14 +22,15 @@ export class CourseHighlightDirective implements OnInit {
   }
 
   getCourseHighlight(creationDate: Date): string {
+    const date = new Date(creationDate);
     const currentDate = new Date();
-    const pastDateTermValue = new Date().setDate(creationDate.getDate() - DAYS_AGO);
+    const pastDateTermValue = new Date().setDate(date.getDate() - DAYS_AGO);
     const pastDateTerm = new Date(pastDateTermValue);
 
-    if (creationDate < currentDate && creationDate >= pastDateTerm) {
+    if (date < currentDate && date >= pastDateTerm) {
       return 'green';
     }
-    if (creationDate > currentDate) {
+    if (date > currentDate) {
       return 'blue';
     }
 

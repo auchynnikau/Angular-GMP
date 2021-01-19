@@ -1,27 +1,27 @@
 <div
   courseHighlight
-  [highlight]="course.creationDate"
+  [highlight]="course.date"
   class="course-item"
   [ngClass]="{'course-item--top-rated' : course.isTopRated === true}"
 >
   <div class="course-item-header">
     <div class="course-item-header__title-wrapper">
-      <h2 class="course-item-header__title">{{course.title | uppercase}}</h2>
+      <h2 class="course-item-header__title">{{course.name | uppercase}}</h2>
       <div class="course-item-header__top-rate" *ngIf="course.isTopRated"></div>
     </div>
     <div class="course-item-info">
-      <span class="course-item-info__duration">{{course.duration | duration: 'h[h] m[min]'}}</span>
-      <span class="course-item-info__date">{{course.creationDate | date: 'M MMM y'}}</span>
+      <span class="course-item-info__duration">{{course.length | duration: 'h[h] m[min]'}}</span>
+      <span class="course-item-info__date">{{course.date | date: 'M MMM y'}}</span>
     </div>
   </div>
   <div class="course-item-content">
     <p class="course-item-content__description">{{course.description}}</p>
     <div class="course-item-controls">
-      <button mat-raised-button color="primary" (click)="handleEditCourse(course.id)" [routerLink]="['/courses', course.id]">
+      <button mat-raised-button color="primary" [routerLink]="['/courses', course.id]">
         <mat-icon fontSet="fa" fontIcon="fa-edit"></mat-icon>
         Edit
       </button>
-      <button mat-raised-button color="primary" (click)="handleDeleteCourse(course.id)">
+      <button mat-raised-button color="primary" (click)="handleDeleteCourse()">
         <mat-icon fontSet="fa" fontIcon="fa-trash"></mat-icon>
         Delete
       </button>

@@ -3,7 +3,7 @@ import { Course } from '../models/course';
 
 @Pipe({ name: 'orderBy' })
 export class OrderByPipe implements PipeTransform {
-  transform(courses: Course[], orderedBy: string = 'creationDate'): Course[] {
+  transform(courses: Course[], orderedBy: string = 'date'): Course[] {
     return courses.sort((prev: Course, next: Course): number => {
       return new Date(prev[orderedBy]).getTime() - new Date(next[orderedBy]).getTime();
     });

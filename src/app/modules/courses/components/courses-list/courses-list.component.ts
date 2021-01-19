@@ -1,6 +1,7 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { CourseProps } from '../../../../shared/models/course';
 import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
 import { CoursesService } from '../../services/courses.service';
@@ -14,11 +15,13 @@ import { CoursesService } from '../../services/courses.service';
 export class CoursesListComponent implements OnChanges {
   constructor(
     private coursesService: CoursesService,
+    private route: ActivatedRoute,
     private filter: FilterPipe,
     private dialog: MatDialog,
   ) {}
 
   courses: CourseProps[] = [];
+  count = 5;
 
   @Input() searchQuery: string;
 
@@ -42,7 +45,8 @@ export class CoursesListComponent implements OnChanges {
   }
 
   loadMore(): void {
-    console.log('load more');
+    this.count += 5;
+    this.getCoursesList(this.count);
   }
 
   deleteCourse(id: string): void {
@@ -50,12 +54,9 @@ export class CoursesListComponent implements OnChanges {
     this.getCoursesList();
   }
 
-  editCourse(id: string): void {
-    console.log('edit: ', id);
-  }
-
-  getCoursesList(): void {
-    const courses = this.coursesService.getCoursesList();
-    this.courses = this.filter.transform(courses, this.searchQuery);
+  getCoursesList(count?: number): void {
+    this.coursesService.getCoursesList(count).subscribe((data: CourseProps[]): void => {
+      this.courses = this.filter.transform(data, this.searchQuery);
+    });
   }
 }

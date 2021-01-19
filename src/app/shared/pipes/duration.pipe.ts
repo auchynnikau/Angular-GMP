@@ -6,7 +6,7 @@ const durationFormat = 'h[h] m[min]';
 
 @Pipe({ name: 'duration' })
 export class DurationPipe implements PipeTransform {
-  transform(duration: number, format: string = durationFormat): string {
-    return moment.duration(duration, 'minutes').format(format);
+  transform(length: number, format: string = durationFormat): string {
+    return moment.duration(length, 'minutes').format(format);
   }
 }
