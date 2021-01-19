@@ -1,29 +1,33 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseProps } from '../../../../shared/models/course';
-import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
   selector: 'vc-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
-  providers: [FilterPipe, CoursesService],
+  providers: [CoursesService],
 })
-export class CoursesListComponent implements OnChanges {
+export class CoursesListComponent implements OnInit, OnChanges {
   constructor(
     private coursesService: CoursesService,
     private route: ActivatedRoute,
-    private filter: FilterPipe,
     private dialog: MatDialog,
-  ) {}
+    private router: Router,
+  ) {
+    this.setQueryParams({ count: 5, sort: true });
+  }
 
   courses: CourseProps[] = [];
-  count = 5;
 
   @Input() searchQuery: string;
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(() => this.getCoursesList());
+  }
 
   confirmDeleting(id: string): void {
     const dialogRef = this.dialog.open(ConfirmComponent, {
@@ -44,9 +48,25 @@ export class CoursesListComponent implements OnChanges {
     this.getCoursesList();
   }
 
+  setQueryParams(queryParams) {
+    this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      relativeTo: this.route,
+      queryParams,
+    });
+  }
+
   loadMore(): void {
-    this.count += 5;
-    this.getCoursesList(this.count);
+    const { count } = this.route.snapshot.queryParams;
+
+    if (count) {
+      const updatedParam = +count + 5;
+      this.setQueryParams({ count: updatedParam });
+    } else {
+      this.setQueryParams({ count: 5 });
+    }
+
+    this.getCoursesList();
   }
 
   deleteCourse(id: string): void {
@@ -54,9 +74,9 @@ export class CoursesListComponent implements OnChanges {
     this.getCoursesList();
   }
 
-  getCoursesList(count?: number): void {
-    this.coursesService.getCoursesList(count).subscribe((data: CourseProps[]): void => {
-      this.courses = this.filter.transform(data, this.searchQuery);
+  getCoursesList(): void {
+    this.coursesService.getCoursesList().subscribe((data: CourseProps[]): void => {
+      this.courses = [...data];
     });
   }
 }

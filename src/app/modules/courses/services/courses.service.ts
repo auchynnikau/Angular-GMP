@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CourseProps } from 'src/app/shared/models/course';
@@ -9,11 +10,12 @@ const COURSES_URL = '/courses';
 
 @Injectable()
 export class CoursesService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
-  getCoursesList(count: number = 5): Observable<CourseProps[]> {
-    const url = urljoin(environment.apiUrl, COURSES_URL, `?count=${count}`);
-    return this.http.get<CourseProps[]>(url);
+  getCoursesList(): Observable<CourseProps[]> {
+    const { queryParams } = this.route.snapshot;
+    const url = urljoin(environment.apiUrl, COURSES_URL);
+    return this.http.get<CourseProps[]>(url, { params: queryParams });
   }
 
   getCoursesItem(id: string): Observable<CourseProps> {

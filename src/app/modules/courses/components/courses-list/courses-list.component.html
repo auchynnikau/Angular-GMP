@@ -1,5 +1,5 @@
 <section class="courses-list">
-  <div class="courses-list__item" *ngFor="let course of courses | orderBy: 'date'">
+  <div class="courses-list__item" *ngFor="let course of courses">
     <vc-course-item [course]="course" (deleteCourse)="confirmDeleting($event)">
     </vc-course-item>
   </div>

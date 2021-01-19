@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'vc-search-bar',
@@ -6,11 +7,17 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent {
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
   searchValue: string;
 
-  @Output() searchQuery = new EventEmitter<string>();
-
   handleSearch(): void {
-    this.searchQuery.emit(this.searchValue);
+    this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      relativeTo: this.route,
+      queryParams: {
+        textFragment: this.searchValue,
+      },
+    });
   }
 }
