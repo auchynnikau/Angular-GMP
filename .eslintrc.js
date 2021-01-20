@@ -22,6 +22,7 @@ module.exports = {
         'import/prefer-default-export': 'off',
         'class-methods-use-this': 'off',
         'lines-between-class-members': 'off',
+        "@typescript-eslint/lines-between-class-members": ["off"],
         '@typescript-eslint/unbound-method': [
           'error',
           {

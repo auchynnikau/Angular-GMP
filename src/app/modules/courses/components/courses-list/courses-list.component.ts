@@ -1,26 +1,33 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseProps } from '../../../../shared/models/course';
-import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
   selector: 'vc-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
-  providers: [FilterPipe, CoursesService],
+  providers: [CoursesService],
 })
-export class CoursesListComponent implements OnChanges {
+export class CoursesListComponent implements OnInit, OnChanges {
   constructor(
     private coursesService: CoursesService,
-    private filter: FilterPipe,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
-  ) {}
+    private router: Router,
+  ) {
+    this.setQueryParams({ count: 5, sort: true });
+  }
 
   courses: CourseProps[] = [];
 
   @Input() searchQuery: string;
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(() => this.getCoursesList());
+  }
 
   confirmDeleting(id: string): void {
     const dialogRef = this.dialog.open(ConfirmComponent, {
@@ -41,8 +48,25 @@ export class CoursesListComponent implements OnChanges {
     this.getCoursesList();
   }
 
+  setQueryParams(queryParams) {
+    this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      relativeTo: this.route,
+      queryParams,
+    });
+  }
+
   loadMore(): void {
-    console.log('load more');
+    const { count } = this.route.snapshot.queryParams;
+
+    if (count) {
+      const updatedParam = +count + 5;
+      this.setQueryParams({ count: updatedParam });
+    } else {
+      this.setQueryParams({ count: 5 });
+    }
+
+    this.getCoursesList();
   }
 
   deleteCourse(id: string): void {
@@ -50,12 +74,9 @@ export class CoursesListComponent implements OnChanges {
     this.getCoursesList();
   }
 
-  editCourse(id: string): void {
-    console.log('edit: ', id);
-  }
-
   getCoursesList(): void {
-    const courses = this.coursesService.getCoursesList();
-    this.courses = this.filter.transform(courses, this.searchQuery);
+    this.coursesService.getCoursesList().subscribe((data: CourseProps[]): void => {
+      this.courses = [...data];
+    });
   }
 }

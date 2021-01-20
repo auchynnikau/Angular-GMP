@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { CoursesService } from 'src/app/modules/courses/services/courses.service';
+import { CourseProps } from 'src/app/shared/models/course';
 import { Breadcrumbs } from './breadcrumbs';
 
 const DEFAULT_BREADCRUMB = 'Courses';
@@ -28,8 +29,11 @@ export class BreadcrumbsComponent {
   getBreadCrumbLabel(route: ActivatedRoute) {
     if (route.routeConfig) {
       if (route.snapshot.params.id) {
-        const course = this.coursesService.getCoursesItem(route.snapshot.params.id);
-        return course.title;
+        this.coursesService
+          .getCoursesItem(route.snapshot.params.id)
+          .subscribe((data: CourseProps): string => {
+            return data.name;
+          });
       }
 
       return route.routeConfig.data.breadcrumb;

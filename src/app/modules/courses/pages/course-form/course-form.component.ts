@@ -13,27 +13,36 @@ import { courseTemplate } from 'src/app/shared/mocks/courses';
 export class CourseFormComponent implements OnInit {
   constructor(private coursesService: CoursesService, private route: ActivatedRoute) {}
 
-  course: CourseProps;
+  course: CourseProps = courseTemplate;
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    const course = this.coursesService.getCoursesItem(id);
-    this.course = course !== undefined ? course : courseTemplate;
+
+    if (this.isEditMode) {
+      this.coursesService.getCoursesItem(id).subscribe((data: CourseProps): void => {
+        this.course = data !== undefined ? { ...data } : courseTemplate;
+      });
+    }
   }
 
-  cancel(): void {
-    console.log('cancel');
+  get isEditMode() {
+    const id = this.route.snapshot.paramMap.get('id');
+    return !!Number(id);
   }
 
   save(): void {
-    console.log('save');
+    if (this.isEditMode) {
+      this.coursesService.updateCourse(this.course);
+    } else {
+      this.coursesService.createCourse(this.course);
+    }
   }
 
-  add(event): void {
+  addChips(event): void {
     console.log(event);
   }
 
-  remove(): void {
-    console.log('remove');
+  removeChips(): void {
+    console.log('remove chips');
   }
 }

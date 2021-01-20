@@ -1,14 +1,13 @@
 <div class="login-form">
   <h3 class="login-form__title">Login</h3>
   <mat-form-field appearance="outline">
-    <mat-label>Email:</mat-label>
+    <mat-label>Login:</mat-label>
     <input
       matInput
       required
-      [formControl]="email"
-      placeholder="Enter your e-mail"
+      [(ngModel)]="login"
+      placeholder="Enter your login"
     >
-    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Password:</mat-label>
@@ -31,6 +30,6 @@
   </mat-form-field>
   <div class="login-form__footer">
     <a class="login-form__forget-pass">Forgot password?</a>
-    <button mat-raised-button color="primary" (click)="login(email, password)">Login</button>
+    <button mat-raised-button color="primary" (click)="logIn(login, password)">Login</button>
   </div>
 </div>

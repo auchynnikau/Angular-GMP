@@ -31,15 +31,5 @@ describe('CourseItemComponent', () => {
     component.deleteCourse.subscribe((id: string) => {
       expect(id).toBe(course.id);
     });
-    component.handleDeleteCourse(course.id);
-  });
-
-  it('should edit course', () => {
-    const course = coursesMocks[0];
-    component.course = course;
-    component.editCourse.subscribe((id: string) => {
-      expect(id).toBe(course.id);
-    });
-    component.handleEditCourse(course.id);
   });
 });
