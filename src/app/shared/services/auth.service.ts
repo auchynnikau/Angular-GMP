@@ -43,9 +43,8 @@ export class AuthService {
     localStorage.clear();
   }
 
-  public getUserInfo(): Observable<Object> {
-    const { token } = this;
+  public getUserInfo(): Observable<UserInfo> {
     const url = urljoin(environment.apiUrl, USER_INFO_URL);
-    return this.http.post<UserInfo>(url, { token });
+    return this.http.post<UserInfo>(url, { token: this.token });
   }
 }

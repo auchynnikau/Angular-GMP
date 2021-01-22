@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService, UserInfo } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,32 +8,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
   providers: [AuthService],
 })
-export class HeaderComponent {
-  constructor(private authService: AuthService, private router: Router) {
-    router.events.subscribe(() => {
+export class HeaderComponent implements OnInit {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  private userName: string;
+
+  ngOnInit() {
+    this.router.events.subscribe((): void => {
       if (this.isAuthenticated) {
         this.getUserName();
       }
     });
   }
 
-  userName: string;
-
-  getUserName() {
-    this.authService.getUserInfo().subscribe((data: UserInfo) => {
-      const {
-        name: { first, last },
-      } = data;
-
+  getUserName(): void {
+    this.authService.getUserInfo().subscribe((data: UserInfo): void => {
+      const { first, last } = data.name;
       this.userName = `${first} ${last}`;
     });
   }
 
-  get isAuthenticated() {
+  get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
   }
 }
