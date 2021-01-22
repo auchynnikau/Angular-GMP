@@ -1,4 +1,9 @@
 <div class="search-bar">
-  <input class="search-bar__field" [(ngModel)]="searchValue" type="text" placeholder="Type to search" />
-  <button class="search-bar__search-button" (click)="handleSearch()">Search</button>
+  <input
+    type="text"
+    class="search-bar__field"
+    [(ngModel)]="searchValue"
+    (keyup)="onKeyUp($event.target.value)"
+    placeholder="Type to search"
+  />
 </div>
