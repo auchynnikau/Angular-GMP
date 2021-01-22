@@ -12,7 +12,7 @@ export class SearchBarComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   private subject = new Subject<string>();
-  private searchValue: string;
+  searchValue: string;
 
   ngOnInit() {
     this.searchValue = this.queryParams.textFragment;
