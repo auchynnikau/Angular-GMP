@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,28 +12,22 @@ import { CoursesService } from '../../services/courses.service';
   styleUrls: ['./courses-list.component.scss'],
   providers: [CoursesService],
 })
-export class CoursesListComponent implements OnInit, OnChanges {
+export class CoursesListComponent implements OnInit {
   constructor(
     private coursesService: CoursesService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
-  ) {
-    this.setQueryParams({ count: 5, sort: true });
-  }
+  ) {}
 
-  courses: Observable<CourseProps[]>;
+  courses$: Observable<CourseProps[]>;
 
   ngOnInit(): void {
-    this.courses = this.coursesService.courses;
+    this.setQueryParams({ count: 5, sort: true });
+    this.courses$ = this.coursesService.courses$;
     this.route.queryParams.subscribe(() => {
       this.coursesService.getCoursesList();
     });
-  }
-
-  ngOnChanges(): void {
-    this.courses = this.coursesService.courses;
-    this.coursesService.getCoursesList();
   }
 
   confirmDeleting(id: string): void {
@@ -72,6 +66,5 @@ export class CoursesListComponent implements OnInit, OnChanges {
 
   deleteCourse(id: string): void {
     this.coursesService.deleteCourse(id);
-    this.coursesService.getCoursesList();
   }
 }

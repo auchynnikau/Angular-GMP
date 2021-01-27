@@ -19,7 +19,7 @@ export class CourseFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 
     this.coursesService.getCoursesItem(id);
-    this.coursesService.courses.subscribe((data) => {
+    this.coursesService.courses$.subscribe((data) => {
       // eslint-disable-next-line prefer-destructuring
       this.course = data[0];
     });

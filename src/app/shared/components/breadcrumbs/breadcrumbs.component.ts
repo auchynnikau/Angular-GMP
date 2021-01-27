@@ -30,7 +30,7 @@ export class BreadcrumbsComponent {
       if (route.snapshot.params.id) {
         const id = route.snapshot.paramMap.get('id');
         this.coursesService.getCoursesItem(id);
-        this.coursesService.courses.subscribe((data) => {
+        this.coursesService.courses$.subscribe((data) => {
           return data[0].name;
         });
       }

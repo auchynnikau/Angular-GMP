@@ -11,21 +11,21 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
-  private userName: string;
+  private _userName: string;
 
   ngOnInit() {
     this.router.events.subscribe((): void => {
       if (this.isAuthenticated) {
-        this.getUserName();
+        this.authService.getUserInfo().subscribe((data: UserInfo): void => {
+          const { first, last } = data.name;
+          this._userName = `${first} ${last}`;
+        });
       }
     });
   }
 
-  getUserName(): void {
-    this.authService.getUserInfo().subscribe((data: UserInfo): void => {
-      const { first, last } = data.name;
-      this.userName = `${first} ${last}`;
-    });
+  get userName(): string {
+    return this._userName;
   }
 
   get isAuthenticated(): boolean {

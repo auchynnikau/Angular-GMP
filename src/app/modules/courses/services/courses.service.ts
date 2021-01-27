@@ -12,9 +12,9 @@ const COURSES_URL = '/courses';
 export class CoursesService {
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
-  private _courses = new BehaviorSubject<CourseProps[]>([]);
+  private courses = new BehaviorSubject<CourseProps[]>([]);
   private dataStore: { courses: CourseProps[] } = { courses: [] };
-  readonly courses = this._courses.asObservable();
+  readonly courses$ = this.courses.asObservable();
 
   getCoursesList(): void {
     const { queryParams } = this.route.snapshot;
@@ -24,7 +24,7 @@ export class CoursesService {
       .subscribe(
         (data: CourseProps[]) => {
           this.dataStore.courses = data;
-          this._courses.next({ ...this.dataStore }.courses);
+          this.courses.next({ ...this.dataStore }.courses);
         },
         () => console.error('Could not load courses.'),
       );
@@ -47,7 +47,7 @@ export class CoursesService {
           this.dataStore.courses.push(data);
         }
 
-        this._courses.next({ ...this.dataStore }.courses);
+        this.courses.next({ ...this.dataStore }.courses);
       },
       () => console.error('Could not load course.'),
     );
@@ -58,7 +58,7 @@ export class CoursesService {
     this.http.post<CourseProps>(url, course).subscribe(
       (data) => {
         this.dataStore.courses.push(data);
-        this._courses.next({ ...this.dataStore }.courses);
+        this.courses.next({ ...this.dataStore }.courses);
       },
       () => console.error('Could not create course.'),
     );
@@ -74,7 +74,7 @@ export class CoursesService {
           }
         });
 
-        this._courses.next({ ...this.dataStore }.courses);
+        this.courses.next({ ...this.dataStore }.courses);
       },
       () => console.error('Could not update course.'),
     );
@@ -84,13 +84,7 @@ export class CoursesService {
     const url = urljoin(environment.apiUrl, COURSES_URL, id);
     this.http.delete<CourseProps>(url).subscribe(
       () => {
-        this.dataStore.courses.forEach((item, index) => {
-          if (item.id === id) {
-            this.dataStore.courses.splice(index, 1);
-          }
-        });
-
-        this._courses.next({ ...this.dataStore }.courses);
+        this.getCoursesList();
       },
       () => console.error('Could not delete course.'),
     );
