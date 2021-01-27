@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, UserInfo } from 'src/app/shared/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { UserInfo } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'vc-header',

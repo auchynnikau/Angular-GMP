@@ -1,22 +1,10 @@
-export interface UserProps {
-  id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
+export interface UserInfo {
+  id: number;
+  token: string;
+  name: {
+    first: string;
+    last: string;
+  };
+  login: string;
   password: string;
-  email: string;
-}
-
-export class User implements UserProps {
-  id: string;
-
-  firstName: string;
-
-  lastName: string;
-
-  userName: string;
-
-  password: string;
-
-  email: string;
 }

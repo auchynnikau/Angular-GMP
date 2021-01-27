@@ -5,7 +5,7 @@
     <input
       matInput
       required
-      [(ngModel)]="login"
+      [(ngModel)]="userInfo.login"
       placeholder="Enter your login"
     >
   </mat-form-field>
@@ -14,7 +14,7 @@
     <input
       matInput
       required
-      [(ngModel)]="password"
+      [(ngModel)]="userInfo.password"
       placeholder="Enter your password"
       [type]="isPasswordShown ? 'password' : 'text'"
     >
@@ -30,6 +30,6 @@
   </mat-form-field>
   <div class="login-form__footer">
     <a class="login-form__forget-pass">Forgot password?</a>
-    <button mat-raised-button color="primary" (click)="logIn(login, password)">Login</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Login</button>
   </div>
 </div>

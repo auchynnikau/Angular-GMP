@@ -23,6 +23,7 @@ module.exports = {
         'class-methods-use-this': 'off',
         'lines-between-class-members': 'off',
         'no-underscore-dangle': 'off',
+        'max-classes-per-file': 'off',
         "@typescript-eslint/lines-between-class-members": ["off"],
         '@typescript-eslint/unbound-method': [
           'error',
