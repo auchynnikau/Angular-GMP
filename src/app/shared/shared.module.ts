@@ -6,6 +6,7 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { LogoComponent } from './components/logo/logo.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LoaderComponent } from './components/loader/loader.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -18,6 +19,7 @@ const components = [
   ConfirmComponent,
   FooterComponent,
   HeaderComponent,
+  LoaderComponent,
   LogoComponent,
 ];
 

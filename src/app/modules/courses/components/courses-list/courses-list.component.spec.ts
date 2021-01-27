@@ -24,12 +24,6 @@ describe('CoursesListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have data after Angular calls OnChanges', () => {
-    component.ngOnChanges();
-
-    expect(component.courses.length).toBeGreaterThan(0);
-  });
-
   it('should call the loadMore method', () => {
     const loadMoreSpy = spyOn(component, 'loadMore');
     element = fixture.debugElement.query(By.css('button')).nativeElement;
@@ -51,12 +45,5 @@ describe('CoursesListComponent', () => {
     component.editCourse('123');
 
     expect(consoleSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should map data', () => {
-    component.ngOnChanges();
-    const courseItems = document.getElementsByClassName('courses-list__item');
-
-    expect(courseItems.length).toBe(3);
   });
 });

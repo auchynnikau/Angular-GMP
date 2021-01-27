@@ -13,16 +13,16 @@ import { courseTemplate } from 'src/app/shared/mocks/courses';
 export class CourseFormComponent implements OnInit {
   constructor(private coursesService: CoursesService, private route: ActivatedRoute) {}
 
-  course: CourseProps = courseTemplate;
+  course: CourseProps = { ...courseTemplate };
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
 
-    if (this.isEditMode) {
-      this.coursesService.getCoursesItem(id).subscribe((data: CourseProps): void => {
-        this.course = data !== undefined ? { ...data } : courseTemplate;
-      });
-    }
+    this.coursesService.getCoursesItem(id);
+    this.coursesService.courses$.subscribe((data) => {
+      // eslint-disable-next-line prefer-destructuring
+      this.course = data[0];
+    });
   }
 
   get isEditMode() {
