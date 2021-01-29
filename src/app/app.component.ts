@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState, selectAuthState } from 'src/app/store/app.states';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -11,16 +8,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   providers: [AuthService],
 })
 export class AppComponent implements OnInit {
-  constructor(private store: Store<AppState>) {
-    this.getState = this.store.select(selectAuthState);
-  }
+  constructor(private authService: AuthService) {}
 
-  getState: Observable<any>;
-  isAuthenticated: false;
+  public isAuthenticated: boolean;
 
   ngOnInit() {
-    this.getState.subscribe((state) => {
-      this.isAuthenticated = state.isAuthenticated;
-    });
+    this.isAuthenticated = this.authService.isAuthenticated;
   }
 }

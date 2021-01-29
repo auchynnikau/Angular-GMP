@@ -9,7 +9,7 @@ export interface AppState {
 
 export const reducers = {
   auth: auth.reducer,
-  // courses: courses.reducer,
+  courses: courses.reducer,
 };
 
 export const selectAuthState = createFeatureSelector<AppState>('auth');

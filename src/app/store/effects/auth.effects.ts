@@ -1,50 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure } from '../actions/auth.actions';
+import { UserInfo } from 'src/app/shared/models/user';
+import {
+  AuthActionTypes,
+  LogInSuccess,
+  LogInFailure,
+  GetUserInfoSuccess,
+  GetUserInfoFailure,
+} from '../actions/auth.actions';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions: Actions, private authService: AuthService, private router: Router) {}
+  constructor(private actions: Actions, private authService: AuthService) {}
 
   @Effect()
-  LogIn: Observable<any> = this.actions.pipe(
+  LogIn: Observable<Action> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN),
-    map((action: LogIn) => action.payload),
-    switchMap((payload) => {
+    switchMap(({ payload }: any) => {
       return this.authService.login(payload.login, payload.password).pipe(
-        map((user) => {
-          return new LogInSuccess({ token: user.token });
+        map(({ token }: UserInfo) => {
+          return new LogInSuccess({ token });
         }),
+        catchError((error) => of(new LogInFailure(error))),
       );
-      // TODO: check error handling
-      // catchError((error) => {
-      //   return of(new LogInFailure(error));
-      // })
     }),
   );
 
   @Effect({ dispatch: false })
   LogInSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
-    map((action: LogInSuccess) => action.payload),
-    tap((payload) => {
-      localStorage.setItem('token', payload.token);
-      this.router.navigateByUrl('/');
+    tap(({ payload }) => {
+      this.authService.saveUserToken(payload.token);
     }),
   );
-
-  @Effect({ dispatch: false })
-  LogInFailure: Observable<any> = this.actions.pipe(ofType(AuthActionTypes.LOGIN_FAILURE));
 
   @Effect({ dispatch: false })
   LogOut: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGOUT),
     tap(() => {
       this.authService.logout();
+    }),
+  );
+
+  @Effect()
+  GetUserInfo: Observable<Action> = this.actions.pipe(
+    ofType(AuthActionTypes.GET_USER_INFO),
+    switchMap(() => {
+      return this.authService.getUserInfo().pipe(
+        map((response: UserInfo) => new GetUserInfoSuccess(response)),
+        catchError((error) => of(new GetUserInfoFailure(error))),
+      );
     }),
   );
 }

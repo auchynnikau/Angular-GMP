@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserInfo } from 'src/app/shared/models/user';
 import urljoin from 'url-join';
 
-export interface Token {
+export interface LoginResponse {
   token: string;
 }
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private LOGIN_URL = '/auth/login';
   private USER_INFO_URL = '/auth/userinfo';
@@ -24,9 +25,9 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  public login(login: string, password: string): Observable<Token> {
+  public login(login: string, password: string): Observable<LoginResponse> {
     const url = urljoin(environment.apiUrl, this.LOGIN_URL);
-    return this.http.post<Token>(url, { login, password });
+    return this.http.post<LoginResponse>(url, { login, password });
   }
 
   public logout(): void {
@@ -36,5 +37,10 @@ export class AuthService {
   public getUserInfo(): Observable<UserInfo> {
     const url = urljoin(environment.apiUrl, this.USER_INFO_URL);
     return this.http.post<UserInfo>(url, { token: this.token });
+  }
+
+  public saveUserToken(token: string): void {
+    localStorage.setItem('token', token);
+    this.router.navigateByUrl('/');
   }
 }

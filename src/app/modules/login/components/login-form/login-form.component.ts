@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { AppState, selectAuthState } from 'src/app/store/app.states';
 import { LogIn } from 'src/app/store/actions/auth.actions';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'vc-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
-  providers: [AuthService],
 })
 export class LoginFormComponent implements OnInit {
   constructor(
@@ -18,10 +16,10 @@ export class LoginFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.getState = this.store.select(selectAuthState);
+    this.getState$ = this.store.select(selectAuthState);
   }
 
-  getState: Observable<any>;
+  private getState$: Observable<any>;
   isAuthenticated: false;
   isPasswordShown = true;
   redirect = '';
@@ -31,7 +29,7 @@ export class LoginFormComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.getState.subscribe((state) => {
+    this.getState$.subscribe((state) => {
       this.isAuthenticated = state.isAuthenticated;
     });
 
@@ -44,6 +42,6 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.store.dispatch(new LogIn(this.userInfo));
+    this.store.dispatch(new LogIn({ ...this.userInfo }));
   }
 }

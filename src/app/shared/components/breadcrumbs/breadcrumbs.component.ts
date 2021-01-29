@@ -1,44 +1,49 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { CoursesService } from 'src/app/modules/courses/services/courses.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState, selectCoursesState } from 'src/app/store/app.states';
+import { LoadCourse } from 'src/app/store/actions/courses.actions';
 import { Breadcrumbs } from './breadcrumbs';
-
-const DEFAULT_BREADCRUMB = 'Courses';
 
 @Component({
   selector: 'vc-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
-  providers: [CoursesService],
 })
 export class BreadcrumbsComponent {
-  breadcrumbs = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    distinctUntilChanged(),
-    map(() => this.buildBreadCrumb(this.activatedRoute.root)),
-  );
-
   constructor(
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService,
+    private store: Store<AppState>,
     private router: Router,
-  ) {}
+  ) {
+    this.getState$ = this.store.select(selectCoursesState);
+    this.breadcrumbs = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      distinctUntilChanged(),
+      map(() => this.buildBreadCrumb(this.activatedRoute.root)),
+    );
+  }
+
+  private DEFAULT_BREADCRUMB = 'Courses';
+  private getState$: Observable<any>;
+  public breadcrumbs: Observable<Breadcrumbs[]>;
 
   getBreadCrumbLabel(route: ActivatedRoute): string {
     if (route.routeConfig) {
       if (route.snapshot.params.id) {
         const id = route.snapshot.paramMap.get('id');
-        this.coursesService.getCoursesItem(id);
-        this.coursesService.courses$.subscribe((data) => {
-          return data[0].name;
+        this.store.dispatch(new LoadCourse(id));
+        this.getState$.subscribe((state) => {
+          return state.courses[0].name;
         });
       }
 
       return route.routeConfig.data.breadcrumb;
     }
 
-    return DEFAULT_BREADCRUMB;
+    return this.DEFAULT_BREADCRUMB;
   }
 
   buildBreadCrumb(

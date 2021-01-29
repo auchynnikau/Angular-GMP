@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoursesService } from 'src/app/modules/courses/services/courses.service';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
 import { CourseItemComponent } from './components/course-item/course-item.component';
@@ -30,6 +31,6 @@ import { CoursesRoutingModule } from './courses-routing.module';
     CourseHighlightDirective,
     CourseFormComponent,
   ],
-  providers: [CourseHighlightDirective],
+  providers: [CourseHighlightDirective, CoursesService],
 })
 export class CoursesModule {}

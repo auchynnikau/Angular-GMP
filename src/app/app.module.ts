@@ -12,13 +12,14 @@ import { CoursesModule } from './modules/courses/courses.module';
 import { MaterialModule } from './modules/material/material.module';
 import { LoaderInterceptorService } from './shared/services/loader-interceptor.service';
 import { AuthEffects } from './store/effects/auth.effects';
+import { CoursesEffects } from './store/effects/courses.effects';
 import { reducers } from './store/app.states';
 
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   imports: [
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CoursesEffects]),
     StoreModule.forRoot(reducers, {}),
     BrowserAnimationsModule,
     AppRoutingModule,
