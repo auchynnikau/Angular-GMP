@@ -1,6 +1,6 @@
-import { CourseProps } from '../models/course';
+import { Course } from '../models/course';
 
-export const coursesMocks: CourseProps[] = [
+export const coursesMocks: Course[] = [
   {
     id: '123123',
     name: 'Course Title',
@@ -42,7 +42,7 @@ export const coursesMocks: CourseProps[] = [
   },
 ];
 
-export const courseTemplate: CourseProps = {
+export const courseTemplate: Course = {
   id: '',
   name: '',
   length: undefined,

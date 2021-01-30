@@ -1,92 +1,42 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { CourseProps } from 'src/app/shared/models/course';
-import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import urljoin from 'url-join';
+import { Course } from 'src/app/shared/models/course';
+import { environment } from 'src/environments/environment';
 
 const COURSES_URL = '/courses';
-
 @Injectable()
 export class CoursesService {
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
-  private courses = new BehaviorSubject<CourseProps[]>([]);
-  private dataStore: { courses: CourseProps[] } = { courses: [] };
-  readonly courses$ = this.courses.asObservable();
-
-  getCoursesList(): void {
+  getCoursesList(): Observable<Course[]> {
     const { queryParams } = this.route.snapshot;
     const url = urljoin(environment.apiUrl, COURSES_URL);
-    this.http
-      .get<CourseProps[]>(url, { params: queryParams })
-      .subscribe(
-        (data: CourseProps[]) => {
-          this.dataStore.courses = data;
-          this.courses.next({ ...this.dataStore }.courses);
-        },
-        () => console.error('Could not load courses.'),
-      );
+    return this.http
+      .get<Course[]>(url, { params: queryParams })
+      .pipe(map((response: Course[]) => response));
   }
 
-  getCoursesItem(id: string | number): void {
+  getCoursesItem(id: string | number): Observable<Course> {
     const url = urljoin(environment.apiUrl, COURSES_URL, id);
-    this.http.get<CourseProps>(url).subscribe(
-      (data) => {
-        let notFound = true;
-
-        this.dataStore.courses.forEach((item, index) => {
-          if (item.id === data.id) {
-            this.dataStore.courses[index] = data;
-            notFound = false;
-          }
-        });
-
-        if (notFound) {
-          this.dataStore.courses.push(data);
-        }
-
-        this.courses.next({ ...this.dataStore }.courses);
-      },
-      () => console.error('Could not load course.'),
-    );
+    return this.http.get<Course>(url).pipe(map((response: Course) => response));
   }
 
-  createCourse(course: CourseProps): void {
+  createCourse(course: Course): Observable<Course> {
     const url = urljoin(environment.apiUrl, COURSES_URL);
-    this.http.post<CourseProps>(url, course).subscribe(
-      (data) => {
-        this.dataStore.courses.push(data);
-        this.courses.next({ ...this.dataStore }.courses);
-      },
-      () => console.error('Could not create course.'),
-    );
+    return this.http.post<Course>(url, course).pipe(map((response: Course) => response));
   }
 
-  updateCourse(course: CourseProps): void {
+  updateCourse(course: Course): Observable<Course> {
     const url = urljoin(environment.apiUrl, COURSES_URL, course.id.toString());
-    this.http.patch<CourseProps>(url, course).subscribe(
-      (data) => {
-        this.dataStore.courses.forEach((item, index) => {
-          if (item.id === data.id) {
-            this.dataStore.courses[index] = data;
-          }
-        });
-
-        this.courses.next({ ...this.dataStore }.courses);
-      },
-      () => console.error('Could not update course.'),
-    );
+    return this.http.patch<Course>(url, course).pipe(map((response: Course) => response));
   }
 
-  deleteCourse(id: string): void {
+  deleteCourse(id: string): Observable<void> {
     const url = urljoin(environment.apiUrl, COURSES_URL, id);
-    this.http.delete<CourseProps>(url).subscribe(
-      () => {
-        this.getCoursesList();
-      },
-      () => console.error('Could not delete course.'),
-    );
+    return this.http.delete<void>(url);
   }
 }

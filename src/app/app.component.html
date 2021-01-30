@@ -1,5 +1,5 @@
 <vc-header></vc-header>
-<vc-breadcrumbs *ngIf="isAuthenticated"></vc-breadcrumbs>
+<vc-breadcrumbs *ngIf="isAuthenticated$ | async"></vc-breadcrumbs>
 <router-outlet></router-outlet>
 <vs-loader></vs-loader>
 <vc-footer></vc-footer>

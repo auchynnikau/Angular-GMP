@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { CoursesService } from 'src/app/modules/courses/services/courses.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectCourseName } from 'src/app/store/selectors/courses.selectors';
+import { LoadCourse } from 'src/app/store/actions/courses.actions';
+import { AppState } from 'src/app/store/app.states';
 import { Breadcrumbs } from './breadcrumbs';
 
 const DEFAULT_BREADCRUMB = 'Courses';
@@ -10,29 +14,34 @@ const DEFAULT_BREADCRUMB = 'Courses';
   selector: 'vc-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
-  providers: [CoursesService],
 })
 export class BreadcrumbsComponent {
-  breadcrumbs = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    distinctUntilChanged(),
-    map(() => this.buildBreadCrumb(this.activatedRoute.root)),
-  );
-
   constructor(
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService,
+    private store: Store<AppState>,
     private router: Router,
-  ) {}
+  ) {
+    this.breadcrumbs = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      distinctUntilChanged(),
+      map(() => this.buildBreadCrumb(this.activatedRoute.root)),
+    );
+  }
+
+  private courseName$: Observable<string> = this.store.select(selectCourseName);
+  public breadcrumbs: Observable<Breadcrumbs[]>;
 
   getBreadCrumbLabel(route: ActivatedRoute): string {
     if (route.routeConfig) {
       if (route.snapshot.params.id) {
         const id = route.snapshot.paramMap.get('id');
-        this.coursesService.getCoursesItem(id);
-        this.coursesService.courses$.subscribe((data) => {
-          return data[0].name;
+        this.store.dispatch(new LoadCourse(id));
+        let breadcrumb: string;
+        this.courseName$.subscribe((courseName: string): void => {
+          breadcrumb = courseName;
         });
+
+        return breadcrumb;
       }
 
       return route.routeConfig.data.breadcrumb;

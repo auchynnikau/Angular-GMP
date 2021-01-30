@@ -4,7 +4,7 @@
     </vc-course-item>
   </div>
   <button class="courses-list__load-more" (click)="loadMore()">
-    <ng-container *ngIf="(courses$ | async)?.length; then loadMoreLabel else noDataLabel"></ng-container>
+    <ng-container *ngIf="(courses$ | async).length; then loadMoreLabel else noDataLabel"></ng-container>
     <ng-template #loadMoreLabel>Load more</ng-template>
     <ng-template #noDataLabel>No data. Feel free to add new course</ng-template>
   </button>

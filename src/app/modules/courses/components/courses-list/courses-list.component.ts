@@ -2,31 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CourseProps } from '../../../../shared/models/course';
-import { CoursesService } from '../../services/courses.service';
+import { LoadCourses, DeleteCourse } from 'src/app/store/actions/courses.actions';
+import { selectCourses } from 'src/app/store/selectors/courses.selectors';
+import { AppState } from 'src/app/store/app.states';
+import { Course } from 'src/app/shared/models/course';
 
 @Component({
   selector: 'vc-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
-  providers: [CoursesService],
 })
 export class CoursesListComponent implements OnInit {
   constructor(
-    private coursesService: CoursesService,
+    private store: Store<AppState>,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
   ) {}
 
-  courses$: Observable<CourseProps[]>;
+  public courses$: Observable<Course[]> = this.store.select(selectCourses);
 
   ngOnInit(): void {
     this.setQueryParams({ count: 5, sort: true });
-    this.courses$ = this.coursesService.courses$;
     this.route.queryParams.subscribe(() => {
-      this.coursesService.getCoursesList();
+      this.store.dispatch(new LoadCourses());
     });
   }
 
@@ -65,6 +66,6 @@ export class CoursesListComponent implements OnInit {
   }
 
   deleteCourse(id: string): void {
-    this.coursesService.deleteCourse(id);
+    this.store.dispatch(new DeleteCourse(id));
   }
 }

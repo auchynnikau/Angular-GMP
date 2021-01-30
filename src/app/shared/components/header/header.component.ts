@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService, UserInfo } from 'src/app/shared/services/auth.service';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { LogOut } from 'src/app/store/actions/auth.actions';
+import { AppState } from 'src/app/store/app.states';
+import { selectUserName } from 'src/app/store/selectors/user.selectors';
 
 @Component({
   selector: 'vc-header',
@@ -8,31 +12,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
   providers: [AuthService],
 })
-export class HeaderComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+export class HeaderComponent {
+  constructor(private authService: AuthService, private store: Store<AppState>) {}
 
-  private _userName: string;
-
-  ngOnInit() {
-    this.router.events.subscribe((): void => {
-      if (this.isAuthenticated) {
-        this.authService.getUserInfo().subscribe((data: UserInfo): void => {
-          const { first, last } = data.name;
-          this._userName = `${first} ${last}`;
-        });
-      }
-    });
-  }
-
-  get userName(): string {
-    return this._userName;
-  }
+  public userName$: Observable<string> = this.store.select(selectUserName);
 
   get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
   logout(): void {
-    this.authService.logout();
+    this.store.dispatch(new LogOut());
   }
 }

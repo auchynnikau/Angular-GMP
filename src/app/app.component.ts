@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectIsAuthenticated } from 'src/app/store/selectors/auth.selectors';
+import { AppState } from './store/app.states';
 
 @Component({
   selector: 'vc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [AuthService],
 })
 export class AppComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private store: Store<AppState>) {}
 
-  get isAuthenticated() {
-    return this.authService.isAuthenticated;
-  }
+  public isAuthenticated$: Observable<boolean> = this.store.select(selectIsAuthenticated);
 }

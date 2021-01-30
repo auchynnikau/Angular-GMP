@@ -1,5 +1,5 @@
 import { Input, Output, EventEmitter, Component, ChangeDetectionStrategy } from '@angular/core';
-import { CourseProps } from '../../../../shared/models/course';
+import { Course } from '../../../../shared/models/course';
 
 @Component({
   selector: 'vc-course-item',
@@ -8,7 +8,7 @@ import { CourseProps } from '../../../../shared/models/course';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseItemComponent {
-  @Input() course: CourseProps;
+  @Input() course: Course;
   @Output() deleteCourse = new EventEmitter<string>();
 
   handleDeleteCourse(): void {
