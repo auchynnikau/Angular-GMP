@@ -1,18 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CourseProps } from 'src/app/shared/models/course';
-import { courseTemplate } from 'src/app/shared/mocks/courses';
-import { AppState, selectCourse } from 'src/app/store/app.states';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LoadCourse, UpdateCourse, CreateCourse } from 'src/app/store/actions/courses.actions';
+import { selectCourse } from 'src/app/store/selectors/courses.selectors';
+import { AppState } from 'src/app/store/app.states';
+import { courseTemplate } from 'src/app/shared/mocks/courses';
+import { CourseProps } from 'src/app/shared/models/course';
 
 @Component({
   selector: 'vc-course-form',
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent implements OnInit, OnDestroy {
+export class CourseFormComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
   public course: CourseProps = { ...courseTemplate };

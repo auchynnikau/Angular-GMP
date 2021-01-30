@@ -3,8 +3,9 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState, selectCourse } from 'src/app/store/app.states';
+import { selectCourse } from 'src/app/store/selectors/courses.selectors';
 import { LoadCourse } from 'src/app/store/actions/courses.actions';
+import { AppState } from 'src/app/store/app.states';
 import { Breadcrumbs } from './breadcrumbs';
 import { CourseProps } from '../../models/course';
 

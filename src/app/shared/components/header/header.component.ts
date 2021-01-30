@@ -3,7 +3,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LogOut } from 'src/app/store/actions/auth.actions';
-import { AppState, selectUserName } from 'src/app/store/app.states';
+import { AppState } from 'src/app/store/app.states';
+import { selectUserName } from 'src/app/store/selectors/user.selectors';
 
 @Component({
   selector: 'vc-header',

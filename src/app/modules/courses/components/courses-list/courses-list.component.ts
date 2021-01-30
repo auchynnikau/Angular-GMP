@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState, selectCoursesState } from 'src/app/store/app.states';
+import { Observable } from 'rxjs';
 import { LoadCourses, DeleteCourse } from 'src/app/store/actions/courses.actions';
+import { selectCourses } from 'src/app/store/selectors/courses.selectors';
+import { AppState } from 'src/app/store/app.states';
 import { CourseProps } from 'src/app/shared/models/course';
 
 @Component({
@@ -19,16 +20,14 @@ export class CoursesListComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
-  ) {
-    this.getState$ = this.store.select(selectCoursesState);
-  }
+  ) {}
 
-  courses: CourseProps[];
-  getState$: Observable<any>;
+  public courses: CourseProps[];
+  private courses$: Observable<any> = this.store.select(selectCourses);
 
   ngOnInit(): void {
     this.setQueryParams({ count: 5, sort: true });
-    this.getState$.subscribe((state) => {
+    this.courses$.subscribe((state) => {
       this.courses = [...state.courses];
     });
     this.route.queryParams.subscribe(() => {
