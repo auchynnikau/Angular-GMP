@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CourseProps } from 'src/app/shared/models/course';
+import { Course } from 'src/app/shared/models/course';
 
 export enum CoursesActionTypes {
   LOAD_COURSES = '[Courses] Load Courses',
@@ -29,7 +29,7 @@ export class LoadCourses implements Action {
 
 export class LoadCoursesSuccess implements Action {
   readonly type = CoursesActionTypes.LOAD_COURSES_SUCCESS;
-  constructor(public payload: CourseProps[]) {}
+  constructor(public payload: Course[]) {}
 }
 
 export class LoadCoursesFailure implements Action {
@@ -44,7 +44,7 @@ export class LoadCourse implements Action {
 
 export class LoadCourseSuccess implements Action {
   readonly type = CoursesActionTypes.LOAD_COURSE_SUCCESS;
-  constructor(public payload: CourseProps) {}
+  constructor(public payload: Course) {}
 }
 
 export class LoadCourseFailure implements Action {
@@ -54,7 +54,7 @@ export class LoadCourseFailure implements Action {
 
 export class CreateCourse implements Action {
   readonly type = CoursesActionTypes.CREATE_COURSE;
-  constructor(public payload: CourseProps) {}
+  constructor(public payload: Course) {}
 }
 
 export class CreateCourseSuccess implements Action {
@@ -68,7 +68,7 @@ export class CreateCourseFailure implements Action {
 
 export class UpdateCourse implements Action {
   readonly type = CoursesActionTypes.UPDATE_COURSE;
-  constructor(public payload: CourseProps) {}
+  constructor(public payload: Course) {}
 }
 
 export class UpdateCourseSuccess implements Action {

@@ -1,8 +1,17 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as courses from '../reducers/courses.reducers';
+import { Course } from 'src/app/shared/models/course';
+import { CoursesState } from '../reducers/courses.reducers';
 
-export const selectCourses = createFeatureSelector<courses.State>('courses');
+export const featureCourses = createFeatureSelector<CoursesState>('courses');
+export const selectCourses = createSelector(
+  featureCourses,
+  (state: CoursesState): Course[] => state.courses,
+);
 export const selectCourse = createSelector(
-  selectCourses,
-  (state: courses.State) => state.courses[0],
+  featureCourses,
+  (state: CoursesState): Course => state.selectedCourse,
+);
+export const selectCourseName = createSelector(
+  selectCourse,
+  (course: Course): string => course.name,
 );

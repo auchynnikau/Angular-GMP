@@ -1,4 +1,4 @@
-export interface CourseProps {
+export interface Course {
   id: string;
   name: string;
   date: Date;

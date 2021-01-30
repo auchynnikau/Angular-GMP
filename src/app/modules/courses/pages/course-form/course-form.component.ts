@@ -6,7 +6,7 @@ import { LoadCourse, UpdateCourse, CreateCourse } from 'src/app/store/actions/co
 import { selectCourse } from 'src/app/store/selectors/courses.selectors';
 import { AppState } from 'src/app/store/app.states';
 import { courseTemplate } from 'src/app/shared/mocks/courses';
-import { CourseProps } from 'src/app/shared/models/course';
+import { Course } from 'src/app/shared/models/course';
 
 @Component({
   selector: 'vc-course-form',
@@ -16,7 +16,7 @@ import { CourseProps } from 'src/app/shared/models/course';
 export class CourseFormComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
-  public course: CourseProps = { ...courseTemplate };
+  public course: Course = { ...courseTemplate };
   private selectCourse$: Observable<any> = this.store.select(selectCourse);
 
   ngOnInit() {

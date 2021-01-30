@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { UserInfo } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/models/user';
 import urljoin from 'url-join';
 
 export interface LoginResponse {
@@ -34,9 +34,9 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  public getUserInfo(): Observable<UserInfo> {
+  public getUserInfo(): Observable<User> {
     const url = urljoin(environment.apiUrl, this.USER_INFO_URL);
-    return this.http.post<UserInfo>(url, { token: this.token });
+    return this.http.post<User>(url, { token: this.token });
   }
 
   public saveUserToken(token: string): void {

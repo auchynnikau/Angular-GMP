@@ -3,11 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectCourse } from 'src/app/store/selectors/courses.selectors';
+import { selectCourseName } from 'src/app/store/selectors/courses.selectors';
 import { LoadCourse } from 'src/app/store/actions/courses.actions';
 import { AppState } from 'src/app/store/app.states';
 import { Breadcrumbs } from './breadcrumbs';
-import { CourseProps } from '../../models/course';
 
 const DEFAULT_BREADCRUMB = 'Courses';
 
@@ -29,7 +28,7 @@ export class BreadcrumbsComponent {
     );
   }
 
-  private selectedCourse$: Observable<CourseProps> = this.store.select(selectCourse);
+  private courseName$: Observable<string> = this.store.select(selectCourseName);
   public breadcrumbs: Observable<Breadcrumbs[]>;
 
   getBreadCrumbLabel(route: ActivatedRoute): string {
@@ -37,7 +36,12 @@ export class BreadcrumbsComponent {
       if (route.snapshot.params.id) {
         const id = route.snapshot.paramMap.get('id');
         this.store.dispatch(new LoadCourse(id));
-        this.selectedCourse$.subscribe((course: CourseProps): string => course.name);
+        let breadcrumb: string;
+        this.courseName$.subscribe((courseName: string): void => {
+          breadcrumb = courseName;
+        });
+
+        return breadcrumb;
       }
 
       return route.routeConfig.data.breadcrumb;

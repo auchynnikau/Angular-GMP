@@ -1,12 +1,12 @@
-import * as auth from './reducers/auth.reducers';
-import * as courses from './reducers/courses.reducers';
+import { AuthState, authReducer } from './reducers/auth.reducers';
+import { CoursesState, coursesReducer } from './reducers/courses.reducers';
 
 export interface AppState {
-  authState: auth.State;
-  coursesState: courses.State;
+  authState: AuthState;
+  coursesState: CoursesState;
 }
 
 export const reducers = {
-  auth: auth.reducer,
-  courses: courses.reducer,
+  auth: authReducer,
+  courses: coursesReducer,
 };

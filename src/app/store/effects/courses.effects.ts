@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { switchMap, mergeMap, map, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { CoursesService } from 'src/app/modules/courses/services/courses.service';
-import { CourseProps } from 'src/app/shared/models/course';
+import { Course } from 'src/app/shared/models/course';
 import {
   CoursesActionTypes,
   LoadCourses,
@@ -33,7 +33,7 @@ export class CoursesEffects {
     ofType(CoursesActionTypes.LOAD_COURSES),
     switchMap(() => {
       return this.coursesService.getCoursesList().pipe(
-        map((courses: CourseProps[]) => new LoadCoursesSuccess(courses)),
+        map((courses: Course[]) => new LoadCoursesSuccess(courses)),
         catchError((error) => of(new LoadCoursesFailure(error))),
       );
     }),
@@ -44,7 +44,7 @@ export class CoursesEffects {
     ofType(CoursesActionTypes.LOAD_COURSE),
     switchMap((action: LoadCourse) => {
       return this.coursesService.getCoursesItem(action.payload).pipe(
-        map((course: CourseProps) => new LoadCourseSuccess(course)),
+        map((course: Course) => new LoadCourseSuccess(course)),
         catchError((error) => of(new LoadCourseFailure(error))),
       );
     }),

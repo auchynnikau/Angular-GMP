@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { LoadCourses, DeleteCourse } from 'src/app/store/actions/courses.actions';
 import { selectCourses } from 'src/app/store/selectors/courses.selectors';
 import { AppState } from 'src/app/store/app.states';
-import { CourseProps } from 'src/app/shared/models/course';
+import { Course } from 'src/app/shared/models/course';
 
 @Component({
   selector: 'vc-courses-list',
@@ -22,14 +22,10 @@ export class CoursesListComponent implements OnInit {
     private router: Router,
   ) {}
 
-  public courses: CourseProps[];
-  private courses$: Observable<any> = this.store.select(selectCourses);
+  public courses$: Observable<Course[]> = this.store.select(selectCourses);
 
   ngOnInit(): void {
     this.setQueryParams({ count: 5, sort: true });
-    this.courses$.subscribe((state) => {
-      this.courses = [...state.courses];
-    });
     this.route.queryParams.subscribe(() => {
       this.store.dispatch(new LoadCourses());
     });

@@ -1,21 +1,21 @@
-import { UserInfo } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/models/user';
 import { AuthActionTypes, AuthActions } from '../actions/auth.actions';
 
-export interface State {
+export interface AuthState {
   isAuthenticated: boolean;
-  errorMessage: string | null;
-  user: UserInfo | null;
-  token: string | null;
+  errorMessage: string;
+  token: string;
+  user: User;
 }
 
-export const initialState: State = {
+export const initialState: AuthState = {
   isAuthenticated: false,
   errorMessage: null,
   token: null,
   user: null,
 };
 
-export function reducer(state = initialState, action: AuthActions): State {
+export function authReducer(state = initialState, action: AuthActions): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN: {
       return {

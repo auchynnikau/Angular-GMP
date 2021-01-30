@@ -1,21 +1,23 @@
-import { CourseProps } from 'src/app/shared/models/course';
+import { Course } from 'src/app/shared/models/course';
 import { CoursesActionTypes, CoursesActions } from '../actions/courses.actions';
 
-export interface State {
+export interface CoursesState {
+  selectedCourse: Course;
+  courses: Course[];
   isLoading: boolean;
   isLoaded: boolean;
-  courses: CourseProps[];
-  errorMessage: string | null;
+  errorMessage: string;
 }
 
-export const initialState: State = {
+export const initialState: CoursesState = {
+  selectedCourse: null,
+  courses: [],
   isLoading: false,
   isLoaded: false,
-  courses: [],
   errorMessage: null,
 };
 
-export function reducer(state = initialState, action: CoursesActions): State {
+export function coursesReducer(state = initialState, action: CoursesActions): CoursesState {
   switch (action.type) {
     case CoursesActionTypes.LOAD_COURSES: {
       return {
@@ -23,6 +25,7 @@ export function reducer(state = initialState, action: CoursesActions): State {
         isLoaded: false,
         isLoading: true,
         errorMessage: null,
+        selectedCourse: null,
       };
     }
     case CoursesActionTypes.LOAD_COURSES_SUCCESS: {
@@ -46,15 +49,16 @@ export function reducer(state = initialState, action: CoursesActions): State {
         isLoaded: false,
         isLoading: true,
         errorMessage: null,
+        selectedCourse: null,
       };
     }
     case CoursesActionTypes.LOAD_COURSE_SUCCESS: {
       return {
         ...state,
-        courses: [action.payload],
         isLoaded: true,
         isLoading: false,
         errorMessage: null,
+        selectedCourse: action.payload,
       };
     }
     case CoursesActionTypes.LOAD_COURSE_FAILURE: {

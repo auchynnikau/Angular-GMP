@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UserInfo } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/models/user';
 import {
   AuthActionTypes,
   LogInSuccess,
@@ -22,7 +22,7 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN),
     switchMap(({ payload }: any) => {
       return this.authService.login(payload.login, payload.password).pipe(
-        map(({ token }: UserInfo) => {
+        map(({ token }: User) => {
           return new LogInSuccess({ token });
         }),
         catchError((error) => of(new LogInFailure(error))),
@@ -51,7 +51,7 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN_SUCCESS),
     switchMap(() => {
       return this.authService.getUserInfo().pipe(
-        map((response: UserInfo) => new GetUserInfoSuccess(response)),
+        map((response: User) => new GetUserInfoSuccess(response)),
         catchError((error) => of(new GetUserInfoFailure(error))),
       );
     }),
