@@ -1,5 +1,5 @@
 import { UserInfo } from 'src/app/shared/models/user';
-import { AuthActionTypes, All } from '../actions/auth.actions';
+import { AuthActionTypes, AuthActions } from '../actions/auth.actions';
 
 export interface State {
   isAuthenticated: boolean;
@@ -15,7 +15,7 @@ export const initialState: State = {
   user: null,
 };
 
-export function reducer(state = initialState, action: All): State {
+export function reducer(state = initialState, action: AuthActions): State {
   switch (action.type) {
     case AuthActionTypes.LOGIN: {
       return {

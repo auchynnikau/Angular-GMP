@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseProps } from 'src/app/shared/models/course';
 import { courseTemplate } from 'src/app/shared/mocks/courses';
-import { AppState, selectCoursesState } from 'src/app/store/app.states';
+import { AppState, selectCourse } from 'src/app/store/app.states';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LoadCourse, UpdateCourse, CreateCourse } from 'src/app/store/actions/courses.actions';
@@ -12,21 +12,19 @@ import { LoadCourse, UpdateCourse, CreateCourse } from 'src/app/store/actions/co
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) {
-    this.getState$ = this.store.select(selectCoursesState);
-  }
+export class CourseFormComponent implements OnInit, OnDestroy {
+  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
-  course: CourseProps = { ...courseTemplate };
-  private getState$: Observable<any>;
+  public course: CourseProps = { ...courseTemplate };
+  private selectCourse$: Observable<any> = this.store.select(selectCourse);
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
       this.store.dispatch(new LoadCourse(id));
-      this.getState$.subscribe(({ courses }) => {
-        this.course = { ...courses[0] };
+      this.selectCourse$.subscribe((course) => {
+        this.course = { ...course };
       });
     } else {
       this.course = { ...courseTemplate };

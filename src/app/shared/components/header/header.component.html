@@ -2,7 +2,7 @@
   <vc-logo></vc-logo>
   <vc-user-info
     *ngIf="isAuthenticated"
-    [userName]="userName"
+    [userName]="userName$ | async"
     (logout)="logout()"
   >
   </vc-user-info>

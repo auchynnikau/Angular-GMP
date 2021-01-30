@@ -3,9 +3,12 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState, selectCoursesState } from 'src/app/store/app.states';
+import { AppState, selectCourse } from 'src/app/store/app.states';
 import { LoadCourse } from 'src/app/store/actions/courses.actions';
 import { Breadcrumbs } from './breadcrumbs';
+import { CourseProps } from '../../models/course';
+
+const DEFAULT_BREADCRUMB = 'Courses';
 
 @Component({
   selector: 'vc-breadcrumbs',
@@ -18,7 +21,6 @@ export class BreadcrumbsComponent {
     private store: Store<AppState>,
     private router: Router,
   ) {
-    this.getState$ = this.store.select(selectCoursesState);
     this.breadcrumbs = this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       distinctUntilChanged(),
@@ -26,8 +28,7 @@ export class BreadcrumbsComponent {
     );
   }
 
-  private DEFAULT_BREADCRUMB = 'Courses';
-  private getState$: Observable<any>;
+  private selectedCourse$: Observable<CourseProps> = this.store.select(selectCourse);
   public breadcrumbs: Observable<Breadcrumbs[]>;
 
   getBreadCrumbLabel(route: ActivatedRoute): string {
@@ -35,15 +36,13 @@ export class BreadcrumbsComponent {
       if (route.snapshot.params.id) {
         const id = route.snapshot.paramMap.get('id');
         this.store.dispatch(new LoadCourse(id));
-        this.getState$.subscribe((state) => {
-          return state.courses[0].name;
-        });
+        this.selectedCourse$.subscribe((course: CourseProps): string => course.name);
       }
 
       return route.routeConfig.data.breadcrumb;
     }
 
-    return this.DEFAULT_BREADCRUMB;
+    return DEFAULT_BREADCRUMB;
   }
 
   buildBreadCrumb(

@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -20,6 +21,7 @@ import { reducers } from './store/app.states';
   bootstrap: [AppComponent],
   imports: [
     EffectsModule.forRoot([AuthEffects, CoursesEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25 }),
     StoreModule.forRoot(reducers, {}),
     BrowserAnimationsModule,
     AppRoutingModule,

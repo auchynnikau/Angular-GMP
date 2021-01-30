@@ -43,7 +43,7 @@ export class GetUserInfoFailure implements Action {
   constructor(public payload: any) {}
 }
 
-export type All =
+export type AuthActions =
   | LogIn
   | LogInSuccess
   | LogInFailure

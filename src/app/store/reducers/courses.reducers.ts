@@ -1,5 +1,5 @@
 import { CourseProps } from 'src/app/shared/models/course';
-import { CoursesActionTypes, All } from '../actions/courses.actions';
+import { CoursesActionTypes, CoursesActions } from '../actions/courses.actions';
 
 export interface State {
   isLoading: boolean;
@@ -15,7 +15,7 @@ export const initialState: State = {
   errorMessage: null,
 };
 
-export function reducer(state = initialState, action: All): State {
+export function reducer(state = initialState, action: CoursesActions): State {
   switch (action.type) {
     case CoursesActionTypes.LOAD_COURSES: {
       return {

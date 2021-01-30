@@ -48,7 +48,7 @@ export class AuthEffects {
 
   @Effect()
   GetUserInfo: Observable<Action> = this.actions.pipe(
-    ofType(AuthActionTypes.GET_USER_INFO),
+    ofType(AuthActionTypes.LOGIN_SUCCESS),
     switchMap(() => {
       return this.authService.getUserInfo().pipe(
         map((response: UserInfo) => new GetUserInfoSuccess(response)),

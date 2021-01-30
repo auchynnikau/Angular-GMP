@@ -94,7 +94,7 @@ export class DeleteCourseFailure implements Action {
   constructor(public payload: any) {}
 }
 
-export type All =
+export type CoursesActions =
   | LoadCourses
   | LoadCoursesSuccess
   | LoadCoursesFailure
